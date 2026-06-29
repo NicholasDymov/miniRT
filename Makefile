@@ -70,4 +70,8 @@ sanitize: fclean
 	@$(MAKE) -C $(LIBFT_DIR) sanitize
 	@$(MAKE) all CFLAGS="$(CFLAGS) -g3 -fsanitize=address,undefined" LDFLAGS="$(LDFLAGS) -fsanitize=address,undefined" --no-print-directory
 
-.PHONY: all clean fclean re bonus debug sanitize
+libft: $(LIBFT)
+
+mlx42: $(MLX42)
+
+.PHONY: all clean fclean re bonus debug sanitize libft mlx42
