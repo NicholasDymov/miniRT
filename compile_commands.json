@@ -1,6 +1,6 @@
 [
   {
-    "file": "src/example.c",
+    "file": "src/parse/parse.c",
     "arguments": [
       "/usr/sbin/cc",
       "-Wall",
@@ -12,12 +12,72 @@
       "-MMD",
       "-MP",
       "-c",
-      "src/example.c",
+      "src/parse/parse.c",
       "-o",
-      "obj/example.o"
+      "obj/parse/parse.o"
     ],
     "directory": "/home/nic/code/ft/minirt",
-    "output": "obj/example.o"
+    "output": "obj/parse/parse.o"
+  },
+  {
+    "file": "src/utils/error.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-Ilib/libft/include",
+      "-Ilib/MLX42/include",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/utils/error.c",
+      "-o",
+      "obj/utils/error.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt",
+    "output": "obj/utils/error.o"
+  },
+  {
+    "file": "src/render/render.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-Ilib/libft/include",
+      "-Ilib/MLX42/include",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/render/render.c",
+      "-o",
+      "obj/render/render.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt",
+    "output": "obj/render/render.o"
+  },
+  {
+    "file": "src/main.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-Ilib/libft/include",
+      "-Ilib/MLX42/include",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/main.c",
+      "-o",
+      "obj/main.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt",
+    "output": "obj/main.o"
   },
   {
     "file": "src/containers/hashmap/hashmap.c",
@@ -707,12 +767,12 @@
       "/usr/sbin/cc",
       "-v",
       "-o",
-      "CMakeFiles/cmTC_d5ef5.dir/CMakeCCompilerABI.c.o",
+      "CMakeFiles/cmTC_9d9d6.dir/CMakeCCompilerABI.c.o",
       "-c",
       "/usr/share/cmake/Modules/CMakeCCompilerABI.c"
     ],
-    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/CMakeScratch/TryCompile-YlWLuo",
-    "output": "CMakeFiles/cmTC_d5ef5.dir/CMakeCCompilerABI.c.o"
+    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/CMakeScratch/TryCompile-xMj8nI",
+    "output": "CMakeFiles/cmTC_9d9d6.dir/CMakeCCompilerABI.c.o"
   },
   {
     "file": "/usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp",
@@ -720,12 +780,12 @@
       "/usr/sbin/c++",
       "-v",
       "-o",
-      "CMakeFiles/cmTC_33f39.dir/CMakeCXXCompilerABI.cpp.o",
+      "CMakeFiles/cmTC_cb786.dir/CMakeCXXCompilerABI.cpp.o",
       "-c",
       "/usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp"
     ],
-    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/CMakeScratch/TryCompile-zCHsdj",
-    "output": "CMakeFiles/cmTC_33f39.dir/CMakeCXXCompilerABI.cpp.o"
+    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/CMakeScratch/TryCompile-gucxFK",
+    "output": "CMakeFiles/cmTC_cb786.dir/CMakeCXXCompilerABI.cpp.o"
   },
   {
     "file": "/home/nic/code/ft/minirt/lib/MLX42/src/mlx_init.c",
@@ -1288,41 +1348,6 @@
     "output": "CMakeFiles/mlx42.dir/src/textures/mlx_png.c.o"
   },
   {
-    "file": "/home/nic/code/ft/minirt/lib/MLX42/src/textures/mlx_xpm42.c",
-    "arguments": [
-      "/usr/sbin/cc",
-      "-I/home/nic/code/ft/minirt/lib/MLX42/include",
-      "-std=c11",
-      "-fPIC",
-      "-D",
-      "LODEPNG_NO_COMPILE_ENCODER",
-      "-D",
-      "LODEPNG_NO_COMPILE_ANCILLARY_CHUNKS",
-      "-D",
-      "NDEBUG",
-      "-Wextra",
-      "-Wall",
-      "-Werror",
-      "-Wunreachable-code",
-      "-Wno-char-subscripts",
-      "-Wno-sign-compare",
-      "-Wno-unused-parameter",
-      "-Wno-missing-field-initializers",
-      "-O3",
-      "-MD",
-      "-MT",
-      "CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o",
-      "-MF",
-      "CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o.d",
-      "-o",
-      "CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o",
-      "-c",
-      "/home/nic/code/ft/minirt/lib/MLX42/src/textures/mlx_xpm42.c"
-    ],
-    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build",
-    "output": "CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o"
-  },
-  {
     "file": "/home/nic/code/ft/minirt/lib/MLX42/src/textures/mlx_texture.c",
     "arguments": [
       "/usr/sbin/cc",
@@ -1356,6 +1381,41 @@
     ],
     "directory": "/home/nic/code/ft/minirt/lib/MLX42/build",
     "output": "CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.o"
+  },
+  {
+    "file": "/home/nic/code/ft/minirt/lib/MLX42/src/textures/mlx_xpm42.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-I/home/nic/code/ft/minirt/lib/MLX42/include",
+      "-std=c11",
+      "-fPIC",
+      "-D",
+      "LODEPNG_NO_COMPILE_ENCODER",
+      "-D",
+      "LODEPNG_NO_COMPILE_ANCILLARY_CHUNKS",
+      "-D",
+      "NDEBUG",
+      "-Wextra",
+      "-Wall",
+      "-Werror",
+      "-Wunreachable-code",
+      "-Wno-char-subscripts",
+      "-Wno-sign-compare",
+      "-Wno-unused-parameter",
+      "-Wno-missing-field-initializers",
+      "-O3",
+      "-MD",
+      "-MT",
+      "CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o",
+      "-MF",
+      "CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o.d",
+      "-o",
+      "CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o",
+      "-c",
+      "/home/nic/code/ft/minirt/lib/MLX42/src/textures/mlx_xpm42.c"
+    ],
+    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build",
+    "output": "CMakeFiles/mlx42.dir/src/textures/mlx_xpm42.c.o"
   },
   {
     "file": "/home/nic/code/ft/minirt/lib/MLX42/lib/png/lodepng.c",
