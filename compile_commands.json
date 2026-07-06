@@ -767,12 +767,12 @@
       "/usr/sbin/cc",
       "-v",
       "-o",
-      "CMakeFiles/cmTC_9d9d6.dir/CMakeCCompilerABI.c.o",
+      "CMakeFiles/cmTC_36e42.dir/CMakeCCompilerABI.c.o",
       "-c",
       "/usr/share/cmake/Modules/CMakeCCompilerABI.c"
     ],
-    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/CMakeScratch/TryCompile-xMj8nI",
-    "output": "CMakeFiles/cmTC_9d9d6.dir/CMakeCCompilerABI.c.o"
+    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/CMakeScratch/TryCompile-7G7FgC",
+    "output": "CMakeFiles/cmTC_36e42.dir/CMakeCCompilerABI.c.o"
   },
   {
     "file": "/usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp",
@@ -780,47 +780,12 @@
       "/usr/sbin/c++",
       "-v",
       "-o",
-      "CMakeFiles/cmTC_cb786.dir/CMakeCXXCompilerABI.cpp.o",
+      "CMakeFiles/cmTC_3a264.dir/CMakeCXXCompilerABI.cpp.o",
       "-c",
       "/usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp"
     ],
-    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/CMakeScratch/TryCompile-gucxFK",
-    "output": "CMakeFiles/cmTC_cb786.dir/CMakeCXXCompilerABI.cpp.o"
-  },
-  {
-    "file": "/home/nic/code/ft/minirt/lib/MLX42/src/mlx_init.c",
-    "arguments": [
-      "/usr/sbin/cc",
-      "-I/home/nic/code/ft/minirt/lib/MLX42/include",
-      "-std=c11",
-      "-fPIC",
-      "-D",
-      "LODEPNG_NO_COMPILE_ENCODER",
-      "-D",
-      "LODEPNG_NO_COMPILE_ANCILLARY_CHUNKS",
-      "-D",
-      "NDEBUG",
-      "-Wextra",
-      "-Wall",
-      "-Werror",
-      "-Wunreachable-code",
-      "-Wno-char-subscripts",
-      "-Wno-sign-compare",
-      "-Wno-unused-parameter",
-      "-Wno-missing-field-initializers",
-      "-O3",
-      "-MD",
-      "-MT",
-      "CMakeFiles/mlx42.dir/src/mlx_init.c.o",
-      "-MF",
-      "CMakeFiles/mlx42.dir/src/mlx_init.c.o.d",
-      "-o",
-      "CMakeFiles/mlx42.dir/src/mlx_init.c.o",
-      "-c",
-      "/home/nic/code/ft/minirt/lib/MLX42/src/mlx_init.c"
-    ],
-    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build",
-    "output": "CMakeFiles/mlx42.dir/src/mlx_init.c.o"
+    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/CMakeScratch/TryCompile-SSupUB",
+    "output": "CMakeFiles/cmTC_3a264.dir/CMakeCXXCompilerABI.cpp.o"
   },
   {
     "file": "/home/nic/code/ft/minirt/lib/MLX42/src/mlx_cursor.c",
@@ -926,6 +891,41 @@
     ],
     "directory": "/home/nic/code/ft/minirt/lib/MLX42/build",
     "output": "CMakeFiles/mlx42.dir/src/mlx_images.c.o"
+  },
+  {
+    "file": "/home/nic/code/ft/minirt/lib/MLX42/src/mlx_init.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-I/home/nic/code/ft/minirt/lib/MLX42/include",
+      "-std=c11",
+      "-fPIC",
+      "-D",
+      "LODEPNG_NO_COMPILE_ENCODER",
+      "-D",
+      "LODEPNG_NO_COMPILE_ANCILLARY_CHUNKS",
+      "-D",
+      "NDEBUG",
+      "-Wextra",
+      "-Wall",
+      "-Werror",
+      "-Wunreachable-code",
+      "-Wno-char-subscripts",
+      "-Wno-sign-compare",
+      "-Wno-unused-parameter",
+      "-Wno-missing-field-initializers",
+      "-O3",
+      "-MD",
+      "-MT",
+      "CMakeFiles/mlx42.dir/src/mlx_init.c.o",
+      "-MF",
+      "CMakeFiles/mlx42.dir/src/mlx_init.c.o.d",
+      "-o",
+      "CMakeFiles/mlx42.dir/src/mlx_init.c.o",
+      "-c",
+      "/home/nic/code/ft/minirt/lib/MLX42/src/mlx_init.c"
+    ],
+    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build",
+    "output": "CMakeFiles/mlx42.dir/src/mlx_init.c.o"
   },
   {
     "file": "/home/nic/code/ft/minirt/lib/MLX42/src/mlx_keys.c",

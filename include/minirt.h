@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:35:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/01 16:28:46 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/07/06 11:21:54 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ typedef struct s_minirt
 void			minirt_render(t_minirt *minirt);
 int				minirt_parse(int fd, t_minirt *minirt);
 
+uint32_t		get_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 void			print_error(const char *msg);
 #endif

@@ -74,10 +74,10 @@ int	main(int argc, char **argv)
 		minirt_destroy(&minirt);
 		return (close(fd), EXIT_FAILURE);
 	}
+	(void)close(fd);
 	minirt_render(&minirt);
 	mlx_loop_hook(minirt.mlx, mlx_esc_hook, minirt.mlx);
 	mlx_loop(minirt.mlx);
-	(void)close(fd);
 	minirt_destroy(&minirt);
 	return (EXIT_SUCCESS);
 }
