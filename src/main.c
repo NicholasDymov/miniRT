@@ -15,22 +15,16 @@
 static int	minirt_init(t_minirt *minirt)
 {
 	minirt->lights.data = NULL;
-	minirt->spheres.data = NULL;
-	minirt->planes.data = NULL;
-	minirt->cylinders.data = NULL;
+	minirt->objects.data = NULL;
 	minirt->mlx = NULL;
 	if (vector_init(&minirt->lights, sizeof(t_light), 1))
 		return (perror("malloc"), 1);
-	if (vector_init(&minirt->spheres, sizeof(t_sphere), 1))
+	if (vector_init(&minirt->objects, sizeof(t_object), 1))
 		return (perror("malloc"), 1);
-	if (vector_init(&minirt->planes, sizeof(t_plane), 1))
-		return (perror("malloc"), 1);
-	if (vector_init(&minirt->cylinders, sizeof(t_cylinder), 1))
-		return (perror("malloc"), 1);
-	minirt->mlx = mlx_init(128, 128, "miniRT", 1);
+	minirt->mlx = mlx_init(WIDTH, HEIGHT, "miniRT", 1);
 	if (minirt->mlx == NULL)
 		return (print_error(mlx_strerror(mlx_errno)), 1);
-	minirt->image = mlx_new_image(minirt->mlx, 128, 128);
+	minirt->image = mlx_new_image(minirt->mlx, WIDTH, HEIGHT);
 	if (minirt->image == NULL || mlx_image_to_window(minirt->mlx, minirt->image,
 			0, 0) == -1)
 	{
@@ -45,9 +39,7 @@ static void	minirt_destroy(t_minirt *minirt)
 	if (minirt->mlx != NULL)
 		mlx_terminate(minirt->mlx);
 	vector_destroy(&minirt->lights);
-	vector_destroy(&minirt->spheres);
-	vector_destroy(&minirt->planes);
-	vector_destroy(&minirt->cylinders);
+	vector_destroy(&minirt->objects);
 }
 
 static void	mlx_esc_hook(void *param)
