@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/30 09:55:51 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/01 16:23:54 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/07/08 11:15:12 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@ int	minirt_parse(int fd, t_minirt *minirt)
 {
 	(void)fd;
 	(void)minirt;
+	// parsing happens here
 	return (0);
 }
