@@ -6,7 +6,7 @@
 /*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/30 09:55:51 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/08 16:45:47 by ddymov           ###   ########.fr       */
+/*   Updated: 2026/07/08 17:07:21 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,34 +28,31 @@ int	minirt_parse(int fd, t_minirt *minirt)
 	flags = (t_parse_flags){0};
 	while (line)
 	{
-		if (!(ft_strlen(line) == 0) && parse_line(line, minirt,
-				&flags))
-			return (free(line), ERROR);
+		if (ft_strlen(line) && parse_line(line, minirt, &flags))
+			return (free(line), 1);
 		free(line);
 		line = get_next_line(fd);
 	}
-	return (ft_check_for_flags(flags));
-}
-
-int	ft_check_for_flags(t_parse_flags *flags)
-{
-	if (flags->ambient == false)
-		return (error("Element ambient is missing"));
-	if (flags->camera == false)
-		return (error("Element camera is missing"));
-	if (flags->light == false)
-		return (error("Element light is missing"));
-	return (OK);
+	if (flags->ambient && flags->camera && flags->light)
+		return (0);
+	print_error("Error\n");
+	if (!flags->ambient)
+		print_error("Element ambient is missing\n");
+	if (!flags->camera)
+		print_error("Element camera is missing\n");
+	if (!flags->light)
+		print_error("Element light is missing\n");
+	return (1);
 }
 
 int	parse_line(char *line, t_minirt *minirt, t_parse_flags *flags)
 {
-	t_list	*tokens;
+	char	**tokens;
 	int		ret;
 
 	tokens = ft_split(line, ' ');
 	if (tokens == NULL)
-		return (error("Malloc"));
+		return (perror("malloc"), 1);
 	if (ft_strcmp((char *)tokens->data, "A") == 0
 		|| ft_strcmp((char *)tokens->data, "C") == 0
 		|| ft_strcmp((char *)tokens->data, "L") == 0)
@@ -75,7 +72,7 @@ int	parse_scene(t_list *tokens, t_minirt *minirt, t_parse_flags *flags)
 	if (ft_strcmp((char *)tokens->data, "A") == 0)
 	{
 		if (flags->ambient)
-			return (error("Extra ambient identifier"));
+			return (print_error("Error\nExtra ambient identifier\n"), 1);
 		flags->ambient = true;
 		return (parse_ambient(tokens->next, minirt));
 	}
@@ -115,7 +112,7 @@ int	parse_ambient(t_list *tokens, t_minirt *minirt)
 
 	if (!tokens || !tokens->next)
 		return (error("Not enough information about ambient element"));
-	ratio = atof((char *)tokens->data);
+	ratio = ft_atof((char *)tokens->data);
 	if (ratio < 0.0f || ratio > 1.0f)
 		return (error("Invalid range for ambient ratio"));
 	minirt->ambient.ratio = ratio;
@@ -151,7 +148,7 @@ int	parse_color(char *str, uint32_t *color)
 	return (OK);
 }
 
-int ft_arrlen(char **arr)
+int	ft_arrlen(char **arr)
 {
 	int	len;
 
