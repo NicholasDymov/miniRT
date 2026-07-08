@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   float.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/30 09:55:51 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/08 11:15:12 by ndymov           ###   ########.fr       */
+/*   Created: 2026/07/07 09:23:28 by ndymov            #+#    #+#             */
+/*   Updated: 2026/07/07 09:54:48 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include <math.h>
+#include <stdbool.h>
 
-int	minirt_parse(int fd, t_minirt *minirt)
+bool	f_equal(float x, float y)
 {
-	(void)fd;
-	(void)minirt;
-	// parsing happens here
-	return (0);
+	if (x == y)
+		return (true);
+	if (fabsf(x - y) < FT_EPSILON)
+		return (true);
+	return (fabsf(x - y) < fmaxf(fabsf(x), fabsf(y)) * FT_EPSILON);
 }
