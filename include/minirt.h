@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:35:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/07 12:28:16 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/07/09 12:35:15 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ typedef struct s_minirt
 	mlx_image_t		*image;
 	t_ambient		ambient;
 	t_camera		camera;
+	t_light			light;
 	t_viewport		viewport;
-	t_vector		lights;
 	t_vector		objects;
 }					t_minirt;
 

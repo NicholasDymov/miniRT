@@ -20,6 +20,46 @@
     "output": "obj/parse/parse.o"
   },
   {
+    "file": "src/math/vector_operations.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-Ilib/libft/include",
+      "-Ilib/MLX42/include",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/math/vector_operations.c",
+      "-o",
+      "obj/math/vector_operations.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt",
+    "output": "obj/math/vector_operations.o"
+  },
+  {
+    "file": "src/math/float.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-Ilib/libft/include",
+      "-Ilib/MLX42/include",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/math/float.c",
+      "-o",
+      "obj/math/float.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt",
+    "output": "obj/math/float.o"
+  },
+  {
     "file": "src/utils/error.c",
     "arguments": [
       "/usr/sbin/cc",
@@ -38,6 +78,66 @@
     ],
     "directory": "/home/nic/code/ft/minirt",
     "output": "obj/utils/error.o"
+  },
+  {
+    "file": "src/utils/rgba.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-Ilib/libft/include",
+      "-Ilib/MLX42/include",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/utils/rgba.c",
+      "-o",
+      "obj/utils/rgba.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt",
+    "output": "obj/utils/rgba.o"
+  },
+  {
+    "file": "src/render/intersect.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-Ilib/libft/include",
+      "-Ilib/MLX42/include",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/render/intersect.c",
+      "-o",
+      "obj/render/intersect.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt",
+    "output": "obj/render/intersect.o"
+  },
+  {
+    "file": "src/render/ray.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-Ilib/libft/include",
+      "-Ilib/MLX42/include",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/render/ray.c",
+      "-o",
+      "obj/render/ray.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt",
+    "output": "obj/render/ray.o"
   },
   {
     "file": "src/render/render.c",
@@ -767,12 +867,12 @@
       "/usr/sbin/cc",
       "-v",
       "-o",
-      "CMakeFiles/cmTC_36e42.dir/CMakeCCompilerABI.c.o",
+      "CMakeFiles/cmTC_f16f8.dir/CMakeCCompilerABI.c.o",
       "-c",
       "/usr/share/cmake/Modules/CMakeCCompilerABI.c"
     ],
-    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/CMakeScratch/TryCompile-7G7FgC",
-    "output": "CMakeFiles/cmTC_36e42.dir/CMakeCCompilerABI.c.o"
+    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/CMakeScratch/TryCompile-MuuAZl",
+    "output": "CMakeFiles/cmTC_f16f8.dir/CMakeCCompilerABI.c.o"
   },
   {
     "file": "/usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp",
@@ -780,47 +880,12 @@
       "/usr/sbin/c++",
       "-v",
       "-o",
-      "CMakeFiles/cmTC_3a264.dir/CMakeCXXCompilerABI.cpp.o",
+      "CMakeFiles/cmTC_d6c51.dir/CMakeCXXCompilerABI.cpp.o",
       "-c",
       "/usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp"
     ],
-    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/CMakeScratch/TryCompile-SSupUB",
-    "output": "CMakeFiles/cmTC_3a264.dir/CMakeCXXCompilerABI.cpp.o"
-  },
-  {
-    "file": "/home/nic/code/ft/minirt/lib/MLX42/src/mlx_cursor.c",
-    "arguments": [
-      "/usr/sbin/cc",
-      "-I/home/nic/code/ft/minirt/lib/MLX42/include",
-      "-std=c11",
-      "-fPIC",
-      "-D",
-      "LODEPNG_NO_COMPILE_ENCODER",
-      "-D",
-      "LODEPNG_NO_COMPILE_ANCILLARY_CHUNKS",
-      "-D",
-      "NDEBUG",
-      "-Wextra",
-      "-Wall",
-      "-Werror",
-      "-Wunreachable-code",
-      "-Wno-char-subscripts",
-      "-Wno-sign-compare",
-      "-Wno-unused-parameter",
-      "-Wno-missing-field-initializers",
-      "-O3",
-      "-MD",
-      "-MT",
-      "CMakeFiles/mlx42.dir/src/mlx_cursor.c.o",
-      "-MF",
-      "CMakeFiles/mlx42.dir/src/mlx_cursor.c.o.d",
-      "-o",
-      "CMakeFiles/mlx42.dir/src/mlx_cursor.c.o",
-      "-c",
-      "/home/nic/code/ft/minirt/lib/MLX42/src/mlx_cursor.c"
-    ],
-    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build",
-    "output": "CMakeFiles/mlx42.dir/src/mlx_cursor.c.o"
+    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/CMakeScratch/TryCompile-QkcALN",
+    "output": "CMakeFiles/cmTC_d6c51.dir/CMakeCXXCompilerABI.cpp.o"
   },
   {
     "file": "/home/nic/code/ft/minirt/lib/MLX42/src/mlx_exit.c",
@@ -891,6 +956,41 @@
     ],
     "directory": "/home/nic/code/ft/minirt/lib/MLX42/build",
     "output": "CMakeFiles/mlx42.dir/src/mlx_images.c.o"
+  },
+  {
+    "file": "/home/nic/code/ft/minirt/lib/MLX42/src/mlx_cursor.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-I/home/nic/code/ft/minirt/lib/MLX42/include",
+      "-std=c11",
+      "-fPIC",
+      "-D",
+      "LODEPNG_NO_COMPILE_ENCODER",
+      "-D",
+      "LODEPNG_NO_COMPILE_ANCILLARY_CHUNKS",
+      "-D",
+      "NDEBUG",
+      "-Wextra",
+      "-Wall",
+      "-Werror",
+      "-Wunreachable-code",
+      "-Wno-char-subscripts",
+      "-Wno-sign-compare",
+      "-Wno-unused-parameter",
+      "-Wno-missing-field-initializers",
+      "-O3",
+      "-MD",
+      "-MT",
+      "CMakeFiles/mlx42.dir/src/mlx_cursor.c.o",
+      "-MF",
+      "CMakeFiles/mlx42.dir/src/mlx_cursor.c.o.d",
+      "-o",
+      "CMakeFiles/mlx42.dir/src/mlx_cursor.c.o",
+      "-c",
+      "/home/nic/code/ft/minirt/lib/MLX42/src/mlx_cursor.c"
+    ],
+    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build",
+    "output": "CMakeFiles/mlx42.dir/src/mlx_cursor.c.o"
   },
   {
     "file": "/home/nic/code/ft/minirt/lib/MLX42/src/mlx_init.c",

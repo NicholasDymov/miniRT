@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 12:29:00 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/07 12:33:48 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/07/09 12:41:55 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_error	rt_callback(void *object, void *callback_data)
 	data = (t_rt_callback_data *)callback_data;
 	hit = intersect(data->ray, (t_object *)object);
 	if (hit.hit && hit.distance < data->hit.distance)
-		data->hit.distance = hit.distance;
+		data->hit = hit;
 	return (OK);
 }
 

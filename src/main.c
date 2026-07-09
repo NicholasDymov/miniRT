@@ -14,11 +14,8 @@
 
 static int	minirt_init(t_minirt *minirt)
 {
-	minirt->lights.data = NULL;
 	minirt->objects.data = NULL;
 	minirt->mlx = NULL;
-	if (vector_init(&minirt->lights, sizeof(t_light), 1))
-		return (perror("malloc"), 1);
 	if (vector_init(&minirt->objects, sizeof(t_object), 1))
 		return (perror("malloc"), 1);
 	minirt->mlx = mlx_init(WIDTH, HEIGHT, "miniRT", 1);
@@ -38,7 +35,6 @@ static void	minirt_destroy(t_minirt *minirt)
 {
 	if (minirt->mlx != NULL)
 		mlx_terminate(minirt->mlx);
-	vector_destroy(&minirt->lights);
 	vector_destroy(&minirt->objects);
 }
 
