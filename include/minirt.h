@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:35:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/09 12:35:15 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/07/09 21:44:44 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@
 #  define FT_EPSILON 1e-5f
 # endif
 
-# define NO_FILE_ERR_MSG "You must provide scene description in a .rt file"
-
 typedef enum e_object_type
 {
 	OBJ_SPHERE,
@@ -49,7 +47,7 @@ typedef struct s_camera
 {
 	t_point3D		position;
 	t_vector3D		orientation;
-	uint8_t			FOV;
+	uint8_t			fov;
 }					t_camera;
 
 typedef struct s_ray
@@ -99,6 +97,13 @@ typedef struct s_object
 	t_object_type	type;
 }					t_object;
 
+typedef struct s_parse_flags
+{
+	bool			camera;
+	bool			ambient;
+	bool			light;
+}					t_parse_flags;
+
 typedef struct s_minirt
 {
 	mlx_t			*mlx;
@@ -113,7 +118,7 @@ typedef struct s_minirt
 typedef t_hit		(*t_intersector)(t_ray ray, t_object *object);
 
 void				minirt_render(t_minirt *minirt);
-int					minirt_parse(int fd, t_minirt *minirt);
+t_error				minirt_parse(int fd, t_minirt *minirt);
 
 t_ray				ray_generate(uint32_t x, uint32_t y, t_minirt *minirt);
 t_hit				ray_trace(t_ray ray, t_minirt *minirt);
@@ -123,6 +128,8 @@ t_hit				intersect(t_ray ray, t_object *object);
 uint32_t			get_color(t_hit hit, t_minirt *minirt);
 uint32_t			get_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
-void				print_error(const char *msg);
+t_error				err_msg(t_error error, const char *message);
+
+char				*get_next_line(int fd);
 
 #endif
