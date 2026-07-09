@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:35:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/07 12:28:16 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/07/09 10:32:54 by ddymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_camera
 {
 	t_point3D		position;
 	t_vector3D		orientation;
-	uint8_t			FOV;
+	uint8_t			fov;
 }					t_camera;
 
 typedef struct s_ray
