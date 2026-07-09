@@ -1,8 +1,16 @@
-// -----------------------------------------------------------------------------
-// Codam Coding College, Amsterdam @ 2022-2023 by W2Wizard.
-// See README in the root project for more information.
-// -----------------------------------------------------------------------------
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/07/09 13:19:34 by ndymov            #+#    #+#             */
+/*   Updated: 2026/07/09 21:33:31 by ndymov           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "ft_error.h"
 #include "ft_vector.h"
 #include "minirt.h"
 #include <MLX42/MLX42.h>
@@ -12,24 +20,24 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static int	minirt_init(t_minirt *minirt)
+static t_error	minirt_init(t_minirt *minirt)
 {
 	minirt->lights.data = NULL;
 	minirt->objects.data = NULL;
 	minirt->mlx = NULL;
 	if (vector_init(&minirt->lights, sizeof(t_light), 1))
-		return (perror("malloc"), 1);
+		return (perror("malloc"), ERR_NOMEM);
 	if (vector_init(&minirt->objects, sizeof(t_object), 1))
-		return (perror("malloc"), 1);
+		return (perror("malloc"), ERR_NOMEM);
 	minirt->mlx = mlx_init(WIDTH, HEIGHT, "miniRT", 1);
 	if (minirt->mlx == NULL)
-		return (print_error(mlx_strerror(mlx_errno)), 1);
+		return (err_msg(ERR_MLX, mlx_strerror(mlx_errno)));
 	minirt->image = mlx_new_image(minirt->mlx, WIDTH, HEIGHT);
 	if (minirt->image == NULL || mlx_image_to_window(minirt->mlx, minirt->image,
 			0, 0) == -1)
 	{
 		mlx_close_window(minirt->mlx);
-		return (print_error(mlx_strerror(mlx_errno)), 1);
+		return (err_msg(ERR_MLX, mlx_strerror(mlx_errno)));
 	}
 	return (0);
 }
@@ -57,7 +65,7 @@ int	main(int argc, char **argv)
 	t_minirt	minirt;
 
 	if (argc < 2)
-		return (print_error(NO_FILE_ERR_MSG), EXIT_FAILURE);
+		return (err_msg(ERR_NO_FILE, NULL), EXIT_FAILURE);
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		return (perror(argv[1]), EXIT_FAILURE);
