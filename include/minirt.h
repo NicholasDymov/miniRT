@@ -6,7 +6,7 @@
 /*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:35:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/09 21:44:44 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/07/10 15:25:21 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,20 @@ t_hit				intersect(t_ray ray, t_object *object);
 
 uint32_t			get_color(t_hit hit, t_minirt *minirt);
 uint32_t			get_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+
+t_error				parse_ambient(t_vector *tokens, t_minirt *minirt,
+						bool *flag);
+t_error				parse_camera(t_vector *tokens, t_minirt *minirt,
+						bool *flag);
+t_error				parse_light(t_vector *tokens, t_minirt *minirt, bool *flag);
+
+t_error				parse_sphere(t_vector *tokens, t_minirt *minirt);
+t_error				parse_plane(t_vector *tokens, t_minirt *minirt);
+t_error				parse_cylinder(t_vector *tokens, t_minirt *minirt);
+
+t_error				parse_color(char *token, uint32_t *color);
+t_error				parse_point(char *token, t_point3D *point);
+t_error				parse_vector(char *token, t_vector3D *vec);
 
 t_error				err_msg(t_error error, const char *message);
 

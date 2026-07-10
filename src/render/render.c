@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 16:04:08 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/07 12:48:33 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/07/10 15:00:31 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	viewport_init(t_minirt *minirt)
 	t_vector3D	down;
 	t_viewport	viewport;
 
-	fov = minirt->camera.FOV;
+	fov = minirt->camera.fov;
 	viewport.scale = tanf(fov * (float)M_PI / 360.0f);
 	viewport.aspect = (float)HEIGHT / WIDTH;
 	viewport.forward = minirt->camera.orientation;

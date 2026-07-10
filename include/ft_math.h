@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:58:02 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/07 09:30:06 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/07/10 13:17:32 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ float				v_dot(t_vector3D a, t_vector3D b);
 float				v_length_sq(t_vector3D a);
 float				v_length(t_vector3D a);
 
-bool				f_equal(float x, float y);
+bool				equal(float x, float y);
+bool				range(float x, float start, float stop);
 
 #endif

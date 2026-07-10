@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 07:37:24 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/07 09:29:53 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/07/10 13:04:58 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 bool	v_equal(t_vector3D a, t_vector3D b)
 {
-	return (f_equal(a.x, b.x) && f_equal(a.y, b.y) && f_equal(a.z, b.z));
+	return (equal(a.x, b.x) && equal(a.y, b.y) && equal(a.z, b.z));
 }
 
 t_vector3D	v_add(t_vector3D a, t_vector3D b)
