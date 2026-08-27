@@ -6,7 +6,7 @@
 /*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:35:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/10 15:25:21 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/08/26 08:36:06 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ typedef enum e_object_type
 {
 	OBJ_SPHERE,
 	OBJ_PLANE,
-	OBJ_CYLINDER
+	OBJ_CYLINDER,
+	OBJ_DISK
 }					t_object_type;
 
 typedef struct s_ambient
@@ -92,6 +93,7 @@ typedef struct s_object
 	t_point3D		center;
 	t_vector3D		normal;
 	float			diameter;
+	float			radius;
 	float			height;
 	uint32_t		color;
 	t_object_type	type;
@@ -115,15 +117,16 @@ typedef struct s_minirt
 	t_vector		objects;
 }					t_minirt;
 
-typedef t_hit		(*t_intersector)(t_ray ray, t_object *object);
+typedef t_hit		(*t_intersector)(t_ray ray, const t_object *object);
 
 void				minirt_render(t_minirt *minirt);
 t_error				minirt_parse(int fd, t_minirt *minirt);
 
-t_ray				ray_generate(uint32_t x, uint32_t y, t_minirt *minirt);
-t_hit				ray_trace(t_ray ray, t_minirt *minirt);
+t_ray				ray_generate(uint32_t x, uint32_t y,
+						const t_minirt *minirt);
+t_hit				ray_trace(t_ray ray, const t_minirt *minirt);
 
-t_hit				intersect(t_ray ray, t_object *object);
+t_hit				intersect(t_ray ray, const t_object *object);
 
 uint32_t			get_color(t_hit hit, t_minirt *minirt);
 uint32_t			get_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);

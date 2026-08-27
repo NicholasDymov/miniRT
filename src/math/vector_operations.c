@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 07:37:24 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/10 13:04:58 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/08/26 09:25:49 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ t_vector3D	v_scale(float s, t_vector3D a)
 	return ((t_vector3D){s * a.x, s * a.y, s * a.z});
 }
 
-float	v_length_sq(t_vector3D a)
+float	v_square(t_vector3D a)
 {
 	return (a.x * a.x + a.y * a.y + a.z * a.z);
 }
 
 float	v_length(t_vector3D a)
 {
-	return (sqrt(a.x * a.x + a.y * a.y + a.z * a.z));
+	return (sqrtf(a.x * a.x + a.y * a.y + a.z * a.z));
 }
 
 t_vector3D	v_normalize(t_vector3D a)
@@ -67,6 +67,11 @@ t_vector3D	v_cross(t_vector3D a, t_vector3D b)
 	p.y = a.z * b.x - a.x * b.z;
 	p.z = a.x * b.y - a.y * b.x;
 	return (p);
+}
+
+t_vector3D	v_project(t_vector3D a, t_vector3D n)
+{
+	return (v_sub(a, v_scale(v_dot(a, n), n)));
 }
 
 t_vector3D	v_reflect(t_vector3D i, t_vector3D n)
