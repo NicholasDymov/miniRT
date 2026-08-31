@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:58:02 by ndymov            #+#    #+#             */
-/*   Updated: 2026/08/26 09:40:15 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/08/31 16:39:26 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,16 @@ typedef struct s_vector3D
 
 typedef t_vector3D	t_point3D;
 
-typedef struct s_roots
+typedef struct s_params
 {
-	int				count;
-	float			r1;
-	float			r2;
-}					t_roots;
+	float			d_n;
+	float			co_n;
+	float			r_2;
+	float			a;
+	float			b;
+	float			c;
+	t_vector3D		co;
+}					t_params;
 
 bool				v_equal(t_vector3D a, t_vector3D b);
 

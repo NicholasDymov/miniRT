@@ -6,14 +6,14 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 12:29:00 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/09 12:41:55 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/08/31 17:35:02 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
 
-t_ray	ray_generate(uint32_t x, uint32_t y, t_minirt *minirt)
+t_ray	ray_generate(uint32_t x, uint32_t y, const t_minirt *minirt)
 {
 	float	px;
 	float	py;
@@ -29,25 +29,28 @@ t_ray	ray_generate(uint32_t x, uint32_t y, t_minirt *minirt)
 	return (ray);
 }
 
-static t_error	rt_callback(void *object, void *callback_data)
+t_hit	ray_trace(t_ray ray, const t_minirt *minirt)
 {
-	t_rt_callback_data	*data;
-	t_hit				hit;
+	t_hit		best_hit;
+	t_hit		hit;
+	t_object	*obj;
+	size_t		i;
 
-	data = (t_rt_callback_data *)callback_data;
-	hit = intersect(data->ray, (t_object *)object);
-	if (hit.hit && hit.distance < data->hit.distance)
-		data->hit = hit;
-	return (OK);
-}
-
-t_hit	ray_trace(t_ray ray, t_minirt *minirt)
-{
-	t_rt_callback_data	data;
-
-	data.ray = ray;
-	data.hit.hit = false;
-	data.hit.distance = INFINITY;
-	vector_foreach(&minirt->objects, rt_callback, &data);
-	return (data.hit);
+	best_hit.hit = false;
+	best_hit.distance = INFINITY;
+	i = 0;
+	while (i < minirt->objects.size)
+	{
+		obj = (t_object *)vector_get(&minirt->objects, i);
+		if (obj->type == OBJ_SPHERE)
+			hit = intersect_sphere(ray, obj);
+		else if (obj->type == OBJ_PLANE)
+			hit = intersect_plane(ray, obj);
+		else if (obj->type == OBJ_CYLINDER)
+			hit = intersect_cylinder(ray, obj);
+		if (hit.hit && hit.distance < best_hit.distance)
+			best_hit = hit;
+		i++;
+	}
+	return (best_hit);
 }

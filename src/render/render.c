@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 16:04:08 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/10 15:00:31 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/08/27 16:33:57 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,17 @@ void	minirt_render(t_minirt *minirt)
 
 	viewport_init(minirt);
 	pixels = (uint32_t *)minirt->image->pixels;
-	x = 0;
-	while (x < WIDTH)
+	y = 0;
+	while (y < HEIGHT)
 	{
-		y = 0;
-		while (y < HEIGHT)
+		x = 0;
+		while (x < WIDTH)
 		{
 			ray = ray_generate(x, y, minirt);
 			hit = ray_trace(ray, minirt);
 			pixels[y * WIDTH + x] = get_color(hit, minirt);
-			y++;
+			x++;
 		}
-		x++;
+		y++;
 	}
 }
