@@ -6,14 +6,14 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 15:19:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/08/27 16:54:59 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/08/31 18:24:44 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_float.h"
 #include "minirt.h"
 
-t_error	parse_sphere(t_vector *tokens, t_minirt *minirt)
+t_error	parse_sphere(const t_vector *tokens, t_minirt *minirt)
 {
 	t_error		err;
 	t_object	sphere;
@@ -37,7 +37,7 @@ t_error	parse_sphere(t_vector *tokens, t_minirt *minirt)
 	return (vector_push(&minirt->objects, &sphere));
 }
 
-t_error	parse_plane(t_vector *tokens, t_minirt *minirt)
+t_error	parse_plane(const t_vector *tokens, t_minirt *minirt)
 {
 	t_error		err;
 	t_object	plane;
@@ -61,7 +61,7 @@ t_error	parse_plane(t_vector *tokens, t_minirt *minirt)
 	return (vector_push(&minirt->objects, &plane));
 }
 
-t_error	parse_cylinder(t_vector *tokens, t_minirt *minirt)
+t_error	parse_cylinder(const t_vector *tokens, t_minirt *minirt)
 {
 	t_error		err;
 	t_object	cylinder;

@@ -6,16 +6,18 @@
 /*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:35:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/08/31 17:14:28 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/08/31 18:25:14 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
+# include "ft_error.h"
 # include "ft_math.h"
 # include "ft_vector.h"
 # include <MLX42/MLX42.h>
+# include <stdbool.h>
 # include <stdint.h>
 
 # ifndef WIDTH
@@ -120,22 +122,23 @@ t_hit				intersect_sphere(t_ray ray, const t_object *sphere);
 t_hit				intersect_plane(t_ray ray, const t_object *plane);
 t_hit				intersect_cylinder(t_ray ray, const t_object *cylinder);
 
-uint32_t			get_color(t_hit hit, t_minirt *minirt);
+uint32_t			get_color(t_hit hit, const t_minirt *minirt);
 uint32_t			get_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
-t_error				parse_ambient(t_vector *tokens, t_minirt *minirt,
+t_error				parse_ambient(const t_vector *tokens, t_minirt *minirt,
 						bool *flag);
-t_error				parse_camera(t_vector *tokens, t_minirt *minirt,
+t_error				parse_camera(const t_vector *tokens, t_minirt *minirt,
 						bool *flag);
-t_error				parse_light(t_vector *tokens, t_minirt *minirt, bool *flag);
+t_error				parse_light(const t_vector *tokens, t_minirt *minirt,
+						bool *flag);
 
-t_error				parse_sphere(t_vector *tokens, t_minirt *minirt);
-t_error				parse_plane(t_vector *tokens, t_minirt *minirt);
-t_error				parse_cylinder(t_vector *tokens, t_minirt *minirt);
+t_error				parse_sphere(const t_vector *tokens, t_minirt *minirt);
+t_error				parse_plane(const t_vector *tokens, t_minirt *minirt);
+t_error				parse_cylinder(const t_vector *tokens, t_minirt *minirt);
 
-t_error				parse_color(char *token, uint32_t *color);
-t_error				parse_point(char *token, t_point3D *point);
-t_error				parse_vector(char *token, t_vector3D *vec);
+t_error				parse_color(const char *token, uint32_t *color);
+t_error				parse_point(const char *token, t_point3D *point);
+t_error				parse_vector(const char *token, t_vector3D *vec);
 
 t_error				err_msg(t_error error, const char *message);
 

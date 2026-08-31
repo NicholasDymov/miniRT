@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 12:29:00 by ndymov            #+#    #+#             */
-/*   Updated: 2026/08/31 17:35:02 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/08/31 18:20:26 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,17 @@ t_ray	ray_generate(uint32_t x, uint32_t y, const t_minirt *minirt)
 
 t_hit	ray_trace(t_ray ray, const t_minirt *minirt)
 {
-	t_hit		best_hit;
-	t_hit		hit;
-	t_object	*obj;
-	size_t		i;
+	t_hit			best_hit;
+	t_hit			hit;
+	const t_object	*obj;
+	size_t			i;
 
 	best_hit.hit = false;
 	best_hit.distance = INFINITY;
 	i = 0;
 	while (i < minirt->objects.size)
 	{
-		obj = (t_object *)vector_get(&minirt->objects, i);
+		obj = (const t_object *)vector_get(&minirt->objects, i);
 		if (obj->type == OBJ_SPHERE)
 			hit = intersect_sphere(ray, obj);
 		else if (obj->type == OBJ_PLANE)

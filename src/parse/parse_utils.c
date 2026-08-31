@@ -6,12 +6,13 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 15:21:37 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/10 15:53:41 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/08/31 18:22:36 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_float.h"
 #include "ft_int.h"
+#include "ft_math.h"
 #include "ft_string.h"
 #include "minirt.h"
 #include <stdio.h>
@@ -22,7 +23,7 @@ static void	free_ptr(void *ptr)
 	free(*(void **)ptr);
 }
 
-t_error	parse_color(char *token, uint32_t *color)
+t_error	parse_color(const char *token, uint32_t *color)
 {
 	t_vector	rgb_vec;
 	char		**data;
@@ -48,7 +49,7 @@ t_error	parse_color(char *token, uint32_t *color)
 	return (vector_destroy(&rgb_vec, free_ptr), err);
 }
 
-t_error	parse_point(char *token, t_point3D *pt)
+t_error	parse_point(const char *token, t_point3D *pt)
 {
 	t_vector	coords;
 	char		**data;
@@ -69,7 +70,7 @@ t_error	parse_point(char *token, t_point3D *pt)
 	return (vector_destroy(&coords, free_ptr), err);
 }
 
-t_error	parse_vector(char *token, t_vector3D *vec)
+t_error	parse_vector(const char *token, t_vector3D *vec)
 {
 	t_vector	coords;
 	char		**data;
@@ -88,7 +89,7 @@ t_error	parse_vector(char *token, t_vector3D *vec)
 	else if (!range(vec->x, -1.0f, 1.0f) || !range(vec->y, -1.0f, 1.0f)
 		|| !range(vec->z, -1.0f, 1.0f))
 		err = err_msg(ERR_NORM, token);
-	else if (!equal(v_length_sq(*vec), 1.0f))
+	else if (!equal(v_square(*vec), 1.0f))
 		err = err_msg(ERR_VEC, token);
 	else
 		err = OK;

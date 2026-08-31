@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 15:20:33 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/10 15:57:34 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/08/31 18:26:16 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "ft_int.h"
 #include "minirt.h"
 
-t_error	parse_ambient(t_vector *tokens, t_minirt *minirt, bool *flag)
+t_error	parse_ambient(const t_vector *tokens, t_minirt *minirt, bool *flag)
 {
 	char	**data;
 
@@ -33,7 +33,7 @@ t_error	parse_ambient(t_vector *tokens, t_minirt *minirt, bool *flag)
 	return (parse_color(data[2], &minirt->ambient.color));
 }
 
-t_error	parse_camera(t_vector *tokens, t_minirt *minirt, bool *flag)
+t_error	parse_camera(const t_vector *tokens, t_minirt *minirt, bool *flag)
 {
 	t_error	err;
 	int		fov;
@@ -61,7 +61,7 @@ t_error	parse_camera(t_vector *tokens, t_minirt *minirt, bool *flag)
 	return (OK);
 }
 
-t_error	parse_light(t_vector *tokens, t_minirt *minirt, bool *flag)
+t_error	parse_light(const t_vector *tokens, t_minirt *minirt, bool *flag)
 {
 	t_error	err;
 	char	**data;

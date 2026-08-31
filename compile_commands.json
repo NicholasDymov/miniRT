@@ -1,5 +1,25 @@
 [
   {
+    "file": "src/parse/gnl.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-Ilib/libft/include",
+      "-Ilib/MLX42/include",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/parse/gnl.c",
+      "-o",
+      "obj/parse/gnl.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt",
+    "output": "obj/parse/gnl.o"
+  },
+  {
     "file": "src/parse/parse.c",
     "arguments": [
       "/usr/sbin/cc",
@@ -20,7 +40,7 @@
     "output": "obj/parse/parse.o"
   },
   {
-    "file": "src/math/vector_operations.c",
+    "file": "src/parse/parse_scene.c",
     "arguments": [
       "/usr/sbin/cc",
       "-Wall",
@@ -32,12 +52,52 @@
       "-MMD",
       "-MP",
       "-c",
-      "src/math/vector_operations.c",
+      "src/parse/parse_scene.c",
       "-o",
-      "obj/math/vector_operations.o"
+      "obj/parse/parse_scene.o"
     ],
     "directory": "/home/nic/code/ft/minirt",
-    "output": "obj/math/vector_operations.o"
+    "output": "obj/parse/parse_scene.o"
+  },
+  {
+    "file": "src/parse/parse_objects.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-Ilib/libft/include",
+      "-Ilib/MLX42/include",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/parse/parse_objects.c",
+      "-o",
+      "obj/parse/parse_objects.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt",
+    "output": "obj/parse/parse_objects.o"
+  },
+  {
+    "file": "src/parse/parse_utils.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-Ilib/libft/include",
+      "-Ilib/MLX42/include",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/parse/parse_utils.c",
+      "-o",
+      "obj/parse/parse_utils.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt",
+    "output": "obj/parse/parse_utils.o"
   },
   {
     "file": "src/math/float.c",
@@ -60,7 +120,7 @@
     "output": "obj/math/float.o"
   },
   {
-    "file": "src/utils/error.c",
+    "file": "src/math/vector_operations.c",
     "arguments": [
       "/usr/sbin/cc",
       "-Wall",
@@ -72,12 +132,12 @@
       "-MMD",
       "-MP",
       "-c",
-      "src/utils/error.c",
+      "src/math/vector_operations.c",
       "-o",
-      "obj/utils/error.o"
+      "obj/math/vector_operations.o"
     ],
     "directory": "/home/nic/code/ft/minirt",
-    "output": "obj/utils/error.o"
+    "output": "obj/math/vector_operations.o"
   },
   {
     "file": "src/utils/rgba.c",
@@ -100,7 +160,7 @@
     "output": "obj/utils/rgba.o"
   },
   {
-    "file": "src/render/intersect.c",
+    "file": "src/utils/error.c",
     "arguments": [
       "/usr/sbin/cc",
       "-Wall",
@@ -112,32 +172,12 @@
       "-MMD",
       "-MP",
       "-c",
-      "src/render/intersect.c",
+      "src/utils/error.c",
       "-o",
-      "obj/render/intersect.o"
+      "obj/utils/error.o"
     ],
     "directory": "/home/nic/code/ft/minirt",
-    "output": "obj/render/intersect.o"
-  },
-  {
-    "file": "src/render/ray.c",
-    "arguments": [
-      "/usr/sbin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Iinclude",
-      "-Ilib/libft/include",
-      "-Ilib/MLX42/include",
-      "-MMD",
-      "-MP",
-      "-c",
-      "src/render/ray.c",
-      "-o",
-      "obj/render/ray.o"
-    ],
-    "directory": "/home/nic/code/ft/minirt",
-    "output": "obj/render/ray.o"
+    "output": "obj/utils/error.o"
   },
   {
     "file": "src/render/render.c",
@@ -158,6 +198,86 @@
     ],
     "directory": "/home/nic/code/ft/minirt",
     "output": "obj/render/render.o"
+  },
+  {
+    "file": "src/render/intersect_plane.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-Ilib/libft/include",
+      "-Ilib/MLX42/include",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/render/intersect_plane.c",
+      "-o",
+      "obj/render/intersect_plane.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt",
+    "output": "obj/render/intersect_plane.o"
+  },
+  {
+    "file": "src/render/intersect_sphere.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-Ilib/libft/include",
+      "-Ilib/MLX42/include",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/render/intersect_sphere.c",
+      "-o",
+      "obj/render/intersect_sphere.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt",
+    "output": "obj/render/intersect_sphere.o"
+  },
+  {
+    "file": "src/render/intersect_cylinder.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-Ilib/libft/include",
+      "-Ilib/MLX42/include",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/render/intersect_cylinder.c",
+      "-o",
+      "obj/render/intersect_cylinder.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt",
+    "output": "obj/render/intersect_cylinder.o"
+  },
+  {
+    "file": "src/render/ray.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-Ilib/libft/include",
+      "-Ilib/MLX42/include",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/render/ray.c",
+      "-o",
+      "obj/render/ray.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt",
+    "output": "obj/render/ray.o"
   },
   {
     "file": "src/main.c",
@@ -234,24 +354,6 @@
     "output": "obj/containers/hashmap/hashmap_callbacks.o"
   },
   {
-    "file": "src/containers/hashmap/hashmap_utils.c",
-    "arguments": [
-      "/usr/sbin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Iinclude",
-      "-MMD",
-      "-MP",
-      "-c",
-      "src/containers/hashmap/hashmap_utils.c",
-      "-o",
-      "obj/containers/hashmap/hashmap_utils.o"
-    ],
-    "directory": "/home/nic/code/ft/minirt/lib/libft",
-    "output": "obj/containers/hashmap/hashmap_utils.o"
-  },
-  {
     "file": "src/containers/hashmap/hashmap_utils2.c",
     "arguments": [
       "/usr/sbin/cc",
@@ -268,6 +370,24 @@
     ],
     "directory": "/home/nic/code/ft/minirt/lib/libft",
     "output": "obj/containers/hashmap/hashmap_utils2.o"
+  },
+  {
+    "file": "src/containers/hashmap/hashmap_utils.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/containers/hashmap/hashmap_utils.c",
+      "-o",
+      "obj/containers/hashmap/hashmap_utils.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt/lib/libft",
+    "output": "obj/containers/hashmap/hashmap_utils.o"
   },
   {
     "file": "src/containers/string_pool/string_pool.c",
@@ -466,6 +586,24 @@
     ],
     "directory": "/home/nic/code/ft/minirt/lib/libft",
     "output": "obj/int/power_of_two.o"
+  },
+  {
+    "file": "src/int/minmax.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/int/minmax.c",
+      "-o",
+      "obj/int/minmax.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt/lib/libft",
+    "output": "obj/int/minmax.o"
   },
   {
     "file": "src/list/add.c",
@@ -774,24 +912,6 @@
     "output": "obj/string/len.o"
   },
   {
-    "file": "src/string/split.c",
-    "arguments": [
-      "/usr/sbin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Iinclude",
-      "-MMD",
-      "-MP",
-      "-c",
-      "src/string/split.c",
-      "-o",
-      "obj/string/split.o"
-    ],
-    "directory": "/home/nic/code/ft/minirt/lib/libft",
-    "output": "obj/string/split.o"
-  },
-  {
     "file": "src/string/str_alloc.c",
     "arguments": [
       "/usr/sbin/cc",
@@ -828,6 +948,42 @@
     "output": "obj/string/trim.o"
   },
   {
+    "file": "src/string/split.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/string/split.c",
+      "-o",
+      "obj/string/split.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt/lib/libft",
+    "output": "obj/string/split.o"
+  },
+  {
+    "file": "src/utils/array.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/utils/array.c",
+      "-o",
+      "obj/utils/array.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt/lib/libft",
+    "output": "obj/utils/array.o"
+  },
+  {
     "file": "src/utils/hash.c",
     "arguments": [
       "/usr/sbin/cc",
@@ -846,12 +1002,30 @@
     "output": "obj/utils/hash.o"
   },
   {
+    "file": "src/float/atof.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-MMD",
+      "-MP",
+      "-c",
+      "src/float/atof.c",
+      "-o",
+      "obj/float/atof.o"
+    ],
+    "directory": "/home/nic/code/ft/minirt/lib/libft",
+    "output": "obj/float/atof.o"
+  },
+  {
     "file": "CMakeCCompilerId.c",
     "arguments": [
       "/usr/sbin/cc",
       "CMakeCCompilerId.c"
     ],
-    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/4.3.4/CompilerIdC"
+    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/4.4.3/CompilerIdC"
   },
   {
     "file": "CMakeCXXCompilerId.cpp",
@@ -859,7 +1033,7 @@
       "/usr/sbin/c++",
       "CMakeCXXCompilerId.cpp"
     ],
-    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/4.3.4/CompilerIdCXX"
+    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/4.4.3/CompilerIdCXX"
   },
   {
     "file": "/usr/share/cmake/Modules/CMakeCCompilerABI.c",
@@ -867,12 +1041,12 @@
       "/usr/sbin/cc",
       "-v",
       "-o",
-      "CMakeFiles/cmTC_f16f8.dir/CMakeCCompilerABI.c.o",
+      "CMakeFiles/cmTC_235e4.dir/CMakeCCompilerABI.c.o",
       "-c",
       "/usr/share/cmake/Modules/CMakeCCompilerABI.c"
     ],
-    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/CMakeScratch/TryCompile-MuuAZl",
-    "output": "CMakeFiles/cmTC_f16f8.dir/CMakeCCompilerABI.c.o"
+    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/CMakeScratch/TryCompile-hMPM4n",
+    "output": "CMakeFiles/cmTC_235e4.dir/CMakeCCompilerABI.c.o"
   },
   {
     "file": "/usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp",
@@ -880,12 +1054,47 @@
       "/usr/sbin/c++",
       "-v",
       "-o",
-      "CMakeFiles/cmTC_d6c51.dir/CMakeCXXCompilerABI.cpp.o",
+      "CMakeFiles/cmTC_8a7fe.dir/CMakeCXXCompilerABI.cpp.o",
       "-c",
       "/usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp"
     ],
-    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/CMakeScratch/TryCompile-QkcALN",
-    "output": "CMakeFiles/cmTC_d6c51.dir/CMakeCXXCompilerABI.cpp.o"
+    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build/CMakeFiles/CMakeScratch/TryCompile-Pkba9a",
+    "output": "CMakeFiles/cmTC_8a7fe.dir/CMakeCXXCompilerABI.cpp.o"
+  },
+  {
+    "file": "/home/nic/code/ft/minirt/lib/MLX42/src/mlx_cursor.c",
+    "arguments": [
+      "/usr/sbin/cc",
+      "-I/home/nic/code/ft/minirt/lib/MLX42/include",
+      "-std=c11",
+      "-fPIC",
+      "-D",
+      "LODEPNG_NO_COMPILE_ENCODER",
+      "-D",
+      "LODEPNG_NO_COMPILE_ANCILLARY_CHUNKS",
+      "-D",
+      "NDEBUG",
+      "-Wextra",
+      "-Wall",
+      "-Werror",
+      "-Wunreachable-code",
+      "-Wno-char-subscripts",
+      "-Wno-sign-compare",
+      "-Wno-unused-parameter",
+      "-Wno-missing-field-initializers",
+      "-O3",
+      "-MD",
+      "-MT",
+      "CMakeFiles/mlx42.dir/src/mlx_cursor.c.o",
+      "-MF",
+      "CMakeFiles/mlx42.dir/src/mlx_cursor.c.o.d",
+      "-o",
+      "CMakeFiles/mlx42.dir/src/mlx_cursor.c.o",
+      "-c",
+      "/home/nic/code/ft/minirt/lib/MLX42/src/mlx_cursor.c"
+    ],
+    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build",
+    "output": "CMakeFiles/mlx42.dir/src/mlx_cursor.c.o"
   },
   {
     "file": "/home/nic/code/ft/minirt/lib/MLX42/src/mlx_exit.c",
@@ -956,41 +1165,6 @@
     ],
     "directory": "/home/nic/code/ft/minirt/lib/MLX42/build",
     "output": "CMakeFiles/mlx42.dir/src/mlx_images.c.o"
-  },
-  {
-    "file": "/home/nic/code/ft/minirt/lib/MLX42/src/mlx_cursor.c",
-    "arguments": [
-      "/usr/sbin/cc",
-      "-I/home/nic/code/ft/minirt/lib/MLX42/include",
-      "-std=c11",
-      "-fPIC",
-      "-D",
-      "LODEPNG_NO_COMPILE_ENCODER",
-      "-D",
-      "LODEPNG_NO_COMPILE_ANCILLARY_CHUNKS",
-      "-D",
-      "NDEBUG",
-      "-Wextra",
-      "-Wall",
-      "-Werror",
-      "-Wunreachable-code",
-      "-Wno-char-subscripts",
-      "-Wno-sign-compare",
-      "-Wno-unused-parameter",
-      "-Wno-missing-field-initializers",
-      "-O3",
-      "-MD",
-      "-MT",
-      "CMakeFiles/mlx42.dir/src/mlx_cursor.c.o",
-      "-MF",
-      "CMakeFiles/mlx42.dir/src/mlx_cursor.c.o.d",
-      "-o",
-      "CMakeFiles/mlx42.dir/src/mlx_cursor.c.o",
-      "-c",
-      "/home/nic/code/ft/minirt/lib/MLX42/src/mlx_cursor.c"
-    ],
-    "directory": "/home/nic/code/ft/minirt/lib/MLX42/build",
-    "output": "CMakeFiles/mlx42.dir/src/mlx_cursor.c.o"
   },
   {
     "file": "/home/nic/code/ft/minirt/lib/MLX42/src/mlx_init.c",
