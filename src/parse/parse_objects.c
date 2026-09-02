@@ -6,10 +6,11 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 15:19:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/08/31 18:24:44 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/02 17:41:26 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_error.h"
 #include "ft_float.h"
 #include "minirt.h"
 
@@ -85,8 +86,7 @@ t_error	parse_cylinder(const t_vector *tokens, t_minirt *minirt)
 	if (ft_safe_atof(data[4], &cylinder.height))
 		return (err_msg(ERR_PARSE, data[4]));
 	cylinder.height *= 0.5f;
-	err = parse_color(data[5], &cylinder.color);
-	if (err)
-		return (err);
+	if (parse_color(data[5], &cylinder.color))
+		return (ERR_PARSE);
 	return (vector_push(&minirt->objects, &cylinder));
 }

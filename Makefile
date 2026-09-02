@@ -51,13 +51,15 @@ clean:
 	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory clean
 
 fclean: clean
-	@rm -rf $(NAME)
+	@rm -rf $(NAME) $(NAME)_bonus
 	@rm -rf $(MLX42_DIR)/build
 	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory fclean
 
 re: fclean all
 
-bonus: re
+bonus:
+	@rm -rf $(OBJ_DIR)
+	@$(MAKE) all CFLAGS="$(CFLAGS) -DFT_MANDATORY=0" --no-print-directory
 	@mv $(NAME) $(NAME)_bonus
 
 debug: fclean
@@ -71,6 +73,7 @@ sanitize: fclean
 	@$(MAKE) all CFLAGS="$(CFLAGS) -g3 -fsanitize=address,undefined" LDFLAGS="$(LDFLAGS) -fsanitize=address,undefined" --no-print-directory
 
 fast: fclean
+	@$(MAKE) -C $(LIBFT_DIR) fast
 	@$(MAKE) all CFLAGS="$(CFLAGS) -O3 -march=native -ffast-math -flto" LDFLAGS="$(LDFLAGS) -flto" --no-print-directory
 
 libft: $(LIBFT)

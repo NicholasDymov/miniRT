@@ -6,7 +6,7 @@
 /*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:35:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/08/31 18:25:14 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/02 16:26:51 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 
 # ifndef HEIGHT
 #  define HEIGHT 800
+# endif
+
+# ifndef FT_MANDATORY
+#  define FT_MANDATORY 1
 # endif
 
 # ifndef FT_EPSILON
@@ -106,7 +110,7 @@ typedef struct s_minirt
 	mlx_image_t		*image;
 	t_ambient		ambient;
 	t_camera		camera;
-	t_light			light;
+	t_vector		lights;
 	t_viewport		viewport;
 	t_vector		objects;
 }					t_minirt;
@@ -141,7 +145,5 @@ t_error				parse_point(const char *token, t_point3D *point);
 t_error				parse_vector(const char *token, t_vector3D *vec);
 
 t_error				err_msg(t_error error, const char *message);
-
-char				*get_next_line(int fd);
 
 #endif

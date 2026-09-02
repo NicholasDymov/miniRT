@@ -6,11 +6,12 @@
 /*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/30 09:55:51 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/10 15:37:41 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/02 15:59:27 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_error.h"
+#include "ft_io.h"
 #include "ft_string.h"
 #include "ft_vector.h"
 #include "minirt.h"

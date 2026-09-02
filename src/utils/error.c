@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 16:18:48 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/10 15:16:55 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/02 16:39:37 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_error	err_msg(t_error error, const char *message)
 	[ERR_EXTRA_CAM] = "More than one camera provided",
 	[ERR_EXTRA_LIGHT] = "More than one light provided",
 	[ERR_EXTRA_AMB] = "More than one ambient light provided",
-	[ERR_TYPE] = "Invalid type indentifier",
+	[ERR_TYPE] = "Invalid type identifier",
 	[ERR_PARAMS] = "Incorrect number of parameters for an element of type",
 	[ERR_COORD] = "Invalid coordinates",
 	[ERR_RGB] = "RGB colors must be integers in the range [0, 255]",

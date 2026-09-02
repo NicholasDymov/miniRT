@@ -1,38 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gnl.c                                              :+:      :+:    :+:   */
+/*   vector_operations3.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/09 14:44:30 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/10 15:33:31 by ndymov           ###   ########.fr       */
+/*   Created: 2026/07/06 07:37:24 by ndymov            #+#    #+#             */
+/*   Updated: 2026/09/02 16:43:28 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "ft_math.h"
+#include <stdbool.h>
 
-// temporary substitute
-char	*get_next_line(int fd)
+t_vector3D	v_project(t_vector3D a, t_vector3D n)
 {
-	char		*line;
-	size_t		len;
-	ssize_t		read;
-	static FILE	*fp = NULL;
+	return (v_sub(a, v_scale(v_dot(a, n), n)));
+}
 
-	if (fp == NULL)
-	{
-		fp = fdopen(fd, "r");
-		if (fp == NULL)
-			return (NULL);
-	}
-	line = NULL;
-	len = 0;
-	if ((read = getline(&line, &len, fp)) != -1)
-		return (line);
-	free(line);
-	fclose(fp);
-	fp = NULL;
-	return (NULL);
+t_vector3D	v_reflect(t_vector3D i, t_vector3D n)
+{
+	return (v_sub(i, v_scale(2.0f * v_dot(i, n), n)));
 }
