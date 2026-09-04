@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 13:19:34 by ndymov            #+#    #+#             */
-/*   Updated: 2026/07/09 21:44:06 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/04 10:23:02 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ static t_error	minirt_init(t_minirt *minirt)
 {
 	minirt->objects.data = NULL;
 	minirt->mlx = NULL;
-	if (vector_init(&minirt->objects, sizeof(t_object), 1))
+	if (vector_init(&minirt->objects, sizeof(t_object), 4))
+		return (perror("malloc"), ERR_NOMEM);
+	if (vector_init(&minirt->lights, sizeof(t_light), 1))
 		return (perror("malloc"), ERR_NOMEM);
 	minirt->mlx = mlx_init(WIDTH, HEIGHT, "miniRT", 1);
 	if (minirt->mlx == NULL)
@@ -44,6 +46,7 @@ static void	minirt_destroy(t_minirt *minirt)
 	if (minirt->mlx != NULL)
 		mlx_terminate(minirt->mlx);
 	vector_destroy(&minirt->objects, NULL);
+	vector_destroy(&minirt->lights, NULL);
 }
 
 static void	mlx_esc_hook(void *param)

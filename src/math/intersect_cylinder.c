@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 12:23:32 by ndymov            #+#    #+#             */
-/*   Updated: 2026/08/31 17:08:06 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/04 14:44:13 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static inline t_hit	hit_build_surface(t_ray ray, float t, float direction,
 	hit.point = v_add(ray.origin, v_scale(t, ray.direction));
 	hit.normal = v_scale(direction / cylinder->radius,
 			v_project(v_sub(hit.point, cylinder->center), cylinder->normal));
+	hit.camera = v_scale(-1.0f, ray.direction);
 	hit.color = cylinder->color;
 	return (hit);
 }
@@ -55,7 +56,7 @@ static inline t_hit	intersect_surface(t_ray ray, const t_object *cylinder,
 	return ((t_hit){.hit = false});
 }
 
-static inline t_hit	hit_build_disk(t_ray ray, float t, t_vector3D normal,
+static inline t_hit	hit_build_disk(t_ray ray, float t, t_vector3d normal,
 		const t_object *object)
 {
 	t_hit	hit;
@@ -64,6 +65,7 @@ static inline t_hit	hit_build_disk(t_ray ray, float t, t_vector3D normal,
 	hit.distance = t;
 	hit.point = v_add(ray.origin, v_scale(t, ray.direction));
 	hit.normal = normal;
+	hit.camera = v_scale(-1.0f, ray.direction);
 	hit.color = object->color;
 	return (hit);
 }
@@ -74,7 +76,7 @@ static inline t_hit	intersect_disk(t_ray ray, const t_object *cylinder,
 	float		t1;
 	float		t2;
 	float		d_n_inv;
-	t_vector3D	hit_normal;
+	t_vector3d	hit_normal;
 
 	d_n_inv = 1.0f / prms->d_n;
 	t1 = (-prms->co_n - cylinder->height) * d_n_inv;

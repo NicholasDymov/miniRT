@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 15:21:37 by ndymov            #+#    #+#             */
-/*   Updated: 2026/08/31 18:22:36 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/04 09:31:02 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ t_error	parse_color(const char *token, uint32_t *color)
 			0, 255))
 		err = err_msg(ERR_RGB, token);
 	else
-		*color = get_rgba(rgb[0], rgb[1], rgb[2], 255);
+		*color = rgba_pack(rgb[0], rgb[1], rgb[2], 255);
 	return (vector_destroy(&rgb_vec, free_ptr), err);
 }
 
-t_error	parse_point(const char *token, t_point3D *pt)
+t_error	parse_point(const char *token, t_point3d *pt)
 {
 	t_vector	coords;
 	char		**data;
@@ -70,7 +70,7 @@ t_error	parse_point(const char *token, t_point3D *pt)
 	return (vector_destroy(&coords, free_ptr), err);
 }
 
-t_error	parse_vector(const char *token, t_vector3D *vec)
+t_error	parse_vector(const char *token, t_vector3d *vec)
 {
 	t_vector	coords;
 	char		**data;

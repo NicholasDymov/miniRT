@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 16:04:08 by ndymov            #+#    #+#             */
-/*   Updated: 2026/08/27 16:33:57 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/04 09:56:00 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,20 @@
 void	viewport_init(t_minirt *minirt)
 {
 	float		fov;
-	t_vector3D	up;
-	t_vector3D	down;
+	t_vector3d	up;
+	t_vector3d	down;
 	t_viewport	viewport;
 
 	fov = minirt->camera.fov;
 	viewport.scale = tanf(fov * (float)M_PI / 360.0f);
 	viewport.aspect = (float)HEIGHT / WIDTH;
 	viewport.forward = minirt->camera.orientation;
-	up = (t_vector3D){0.0f, 1.0f, 0.0f};
-	down = (t_vector3D){0.0f, -1.0f, 0.0f};
+	up = (t_vector3d){0.0f, 1.0f, 0.0f};
+	down = (t_vector3d){0.0f, -1.0f, 0.0f};
 	if (v_equal(viewport.forward, up))
-		viewport.right = (t_vector3D){0.0f, 0.0f, 1.0f};
+		viewport.right = (t_vector3d){0.0f, 0.0f, 1.0f};
 	else if (v_equal(viewport.forward, down))
-		viewport.right = (t_vector3D){0.0f, 0.0f, -1.0f};
+		viewport.right = (t_vector3d){0.0f, 0.0f, -1.0f};
 	else
 		viewport.right = v_normalize(v_cross(up, viewport.forward));
 	viewport.up = v_cross(viewport.forward, viewport.right);
@@ -55,7 +55,10 @@ void	minirt_render(t_minirt *minirt)
 		{
 			ray = ray_generate(x, y, minirt);
 			hit = ray_trace(ray, minirt);
-			pixels[y * WIDTH + x] = get_color(hit, minirt);
+			if (hit.hit)
+				pixels[y * WIDTH + x] = color_get(hit, minirt);
+			else
+				pixels[y * WIDTH + x] = rgba_pack(0, 0, 0, 255);
 			x++;
 		}
 		y++;

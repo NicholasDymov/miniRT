@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 12:23:32 by ndymov            #+#    #+#             */
-/*   Updated: 2026/08/31 12:31:57 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/04 14:10:17 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@ static inline t_hit	hit_build(t_ray ray, float t, float direction,
 	hit.point = v_add(ray.origin, v_scale(t, ray.direction));
 	hit.normal = v_scale(direction / sphere->radius, v_sub(hit.point,
 				sphere->center));
+	hit.camera = v_scale(-1.0f, ray.direction);
 	hit.color = sphere->color;
 	return (hit);
 }
 
 t_hit	intersect_sphere(t_ray ray, const t_object *sphere)
 {
-	t_vector3D	co;
+	t_vector3d	co;
 	float		b;
 	float		d;
 	float		d_sqrt;

@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   float.c                                            :+:      :+:    :+:   */
+/*   float_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 09:23:28 by ndymov            #+#    #+#             */
-/*   Updated: 2026/08/25 12:58:35 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/04 14:06:16 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
 #include <stdbool.h>
-
-float	square(float x)
-{
-	return (x * x);
-}
 
 bool	equal(float x, float y)
 {
@@ -31,4 +26,18 @@ bool	equal(float x, float y)
 bool	range(float x, float start, float stop)
 {
 	return (start <= x && x <= stop);
+}
+
+float	square(float x)
+{
+	return (x * x);
+}
+
+float	pow32(float x)
+{
+	x *= x;
+	x *= x;
+	x *= x;
+	x *= x;
+	return (x * x);
 }

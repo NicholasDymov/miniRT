@@ -6,7 +6,7 @@
 /*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:35:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/02 16:26:51 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/04 14:10:02 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <stdint.h>
 
 # ifndef WIDTH
-#  define WIDTH 800
+#  define WIDTH 1200
 # endif
 
 # ifndef HEIGHT
@@ -33,7 +33,7 @@
 # endif
 
 # ifndef FT_EPSILON
-#  define FT_EPSILON 1e-5f
+#  define FT_EPSILON 1e-3f
 # endif
 
 typedef enum e_object_type
@@ -51,23 +51,24 @@ typedef struct s_ambient
 
 typedef struct s_camera
 {
-	t_point3D		position;
-	t_vector3D		orientation;
+	t_point3d		position;
+	t_vector3d		orientation;
 	uint8_t			fov;
 }					t_camera;
 
 typedef struct s_ray
 {
-	t_point3D		origin;
-	t_vector3D		direction;
+	t_point3d		origin;
+	t_vector3d		direction;
 }					t_ray;
 
 typedef struct s_hit
 {
 	bool			hit;
 	float			distance;
-	t_point3D		point;
-	t_vector3D		normal;
+	t_point3d		point;
+	t_vector3d		normal;
+	t_vector3d		camera;
 	uint32_t		color;
 }					t_hit;
 
@@ -75,22 +76,22 @@ typedef struct s_viewport
 {
 	float			scale;
 	float			aspect;
-	t_vector3D		forward;
-	t_vector3D		up;
-	t_vector3D		right;
+	t_vector3d		forward;
+	t_vector3d		up;
+	t_vector3d		right;
 }					t_viewport;
 
 typedef struct s_light
 {
-	t_point3D		position;
-	float			brightness;
+	t_point3d		position;
+	float			ratio;
 	uint32_t		color;
 }					t_light;
 
 typedef struct s_object
 {
-	t_point3D		center;
-	t_vector3D		normal;
+	t_point3d		center;
+	t_vector3d		normal;
 	float			radius;
 	float			height;
 	uint32_t		color;
@@ -103,6 +104,13 @@ typedef struct s_parse_flags
 	bool			ambient;
 	bool			light;
 }					t_parse_flags;
+
+typedef struct s_color
+{
+	float			r;
+	float			g;
+	float			b;
+}					t_color;
 
 typedef struct s_minirt
 {
@@ -126,8 +134,8 @@ t_hit				intersect_sphere(t_ray ray, const t_object *sphere);
 t_hit				intersect_plane(t_ray ray, const t_object *plane);
 t_hit				intersect_cylinder(t_ray ray, const t_object *cylinder);
 
-uint32_t			get_color(t_hit hit, const t_minirt *minirt);
-uint32_t			get_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+uint32_t			color_get(t_hit hit, const t_minirt *minirt);
+uint32_t			rgba_pack(uint32_t r, uint32_t g, uint32_t b, uint32_t a);
 
 t_error				parse_ambient(const t_vector *tokens, t_minirt *minirt,
 						bool *flag);
@@ -141,8 +149,8 @@ t_error				parse_plane(const t_vector *tokens, t_minirt *minirt);
 t_error				parse_cylinder(const t_vector *tokens, t_minirt *minirt);
 
 t_error				parse_color(const char *token, uint32_t *color);
-t_error				parse_point(const char *token, t_point3D *point);
-t_error				parse_vector(const char *token, t_vector3D *vec);
+t_error				parse_point(const char *token, t_point3d *point);
+t_error				parse_vector(const char *token, t_vector3d *vec);
 
 t_error				err_msg(t_error error, const char *message);
 

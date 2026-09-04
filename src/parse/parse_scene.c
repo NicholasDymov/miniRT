@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 15:20:33 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/02 16:48:19 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/04 14:34:08 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 t_error	parse_ambient(const t_vector *tokens, t_minirt *minirt, bool *flag)
 {
 	char	**data;
+	t_error	err;
+	uint8_t	*rgba;
 
 	if (tokens == NULL || minirt == NULL || flag == NULL)
 		return (ERR_INVAL);
@@ -31,7 +33,13 @@ t_error	parse_ambient(const t_vector *tokens, t_minirt *minirt, bool *flag)
 		return (err_msg(ERR_PARSE, data[1]));
 	if (!range(minirt->ambient.ratio, 0.0f, 1.0f))
 		return (err_msg(ERR_AMB, NULL));
-	return (parse_color(data[2], &minirt->ambient.color));
+	err = parse_color(data[2], &minirt->ambient.color);
+	if (err)
+		return (err);
+	rgba = (uint8_t *)&minirt->ambient.color;
+	minirt->ambient.color = rgba_pack(rgba[0] * minirt->ambient.ratio, rgba[1]
+			* minirt->ambient.ratio, rgba[2] * minirt->ambient.ratio, 255);
+	return (OK);
 }
 
 t_error	parse_camera(const t_vector *tokens, t_minirt *minirt, bool *flag)
@@ -79,9 +87,9 @@ t_error	parse_light(const t_vector *tokens, t_minirt *minirt, bool *flag)
 	err = parse_point(data[1], &light.position);
 	if (err)
 		return (err);
-	if (ft_safe_atof(data[2], &light.brightness))
+	if (ft_safe_atof(data[2], &light.ratio))
 		return (err_msg(ERR_PARSE, data[2]));
-	if (!range(light.brightness, 0.0f, 1.0f))
+	if (!range(light.ratio, 0.0f, 1.0f))
 		return (err_msg(ERR_LIGHT, NULL));
 	err = parse_color(data[3], &light.color);
 	if (err)
