@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 12:23:32 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/04 14:09:47 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/05 07:36:09 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_hit	intersect_plane(t_ray ray, const t_object *plane)
 		return ((t_hit){.hit = false});
 	numerator = v_dot(v_sub(plane->center, ray.origin), plane->normal);
 	t = numerator / denominator;
-	if (t <= FT_EPSILON)
+	if (t <= RT_EPSILON)
 		return ((t_hit){.hit = false});
 	if (denominator > 0.0f)
 		return (hit_build(ray, t, v_scale(-1.0f, plane->normal), plane));

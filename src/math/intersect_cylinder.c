@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 12:23:32 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/04 14:44:13 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/05 07:37:33 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static inline t_hit	intersect_surface(t_ray ray, const t_object *cylinder,
 	prms->a = 1 - prms->d_n * prms->d_n;
 	prms->b = v_dot(ray.direction, prms->co) - prms->d_n * prms->co_n;
 	prms->c = v_square(prms->co) - prms->co_n * prms->co_n;
-	if (prms->a < FT_EPSILON)
+	if (prms->a < RT_EPSILON)
 		return ((t_hit){.hit = false});
 	d = prms->b * prms->b - prms->a * (prms->c - prms->r_2);
 	if (d < 0.0f)
@@ -48,10 +48,10 @@ static inline t_hit	intersect_surface(t_ray ray, const t_object *cylinder,
 	d_sqrt = sqrtf(d);
 	a_inv = 1.0f / prms->a;
 	t = (-prms->b - d_sqrt) * a_inv;
-	if (t > FT_EPSILON && fabsf(prms->co_n + t * prms->d_n) <= cylinder->height)
+	if (t > RT_EPSILON && fabsf(prms->co_n + t * prms->d_n) <= cylinder->height)
 		return (hit_build_surface(ray, t, 1.0f, cylinder));
 	t = (-prms->b + d_sqrt) * a_inv;
-	if (t > FT_EPSILON && fabsf(prms->co_n + t * prms->d_n) <= cylinder->height)
+	if (t > RT_EPSILON && fabsf(prms->co_n + t * prms->d_n) <= cylinder->height)
 		return (hit_build_surface(ray, t, -1.0f, cylinder));
 	return ((t_hit){.hit = false});
 }
@@ -85,10 +85,10 @@ static inline t_hit	intersect_disk(t_ray ray, const t_object *cylinder,
 		hit_normal = v_scale(-1.0f, cylinder->normal);
 	else
 		hit_normal = cylinder->normal;
-	if (t1 > FT_EPSILON && t1 < t_max && (t2 <= FT_EPSILON || t1 < t2)
+	if (t1 > RT_EPSILON && t1 < t_max && (t2 <= RT_EPSILON || t1 < t2)
 		&& (prms->a * t1 + 2 * prms->b) * t1 + prms->c <= prms->r_2)
 		return (hit_build_disk(ray, t1, hit_normal, cylinder));
-	if (t2 > FT_EPSILON && t2 < t_max && (prms->a * t2 + 2 * prms->b) * t2
+	if (t2 > RT_EPSILON && t2 < t_max && (prms->a * t2 + 2 * prms->b) * t2
 		+ prms->c <= prms->r_2)
 		return (hit_build_disk(ray, t2, hit_normal, cylinder));
 	else

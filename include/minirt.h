@@ -6,7 +6,7 @@
 /*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:35:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/04 14:10:02 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/05 16:17:52 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,24 @@
 # include <stdbool.h>
 # include <stdint.h>
 
-# ifndef WIDTH
-#  define WIDTH 1200
+# ifndef RT_WIDTH
+#  define RT_WIDTH 1200
 # endif
 
-# ifndef HEIGHT
-#  define HEIGHT 800
+# ifndef RT_HEIGHT
+#  define RT_HEIGHT 800
 # endif
 
-# ifndef FT_MANDATORY
-#  define FT_MANDATORY 1
+# ifndef RT_MANDATORY
+#  define RT_MANDATORY 1
 # endif
 
-# ifndef FT_EPSILON
-#  define FT_EPSILON 1e-3f
+# ifndef RT_EPSILON
+#  define RT_EPSILON 1e-3f
+# endif
+
+# ifndef RT_THREADS
+#  define RT_THREADS 8
 # endif
 
 typedef enum e_object_type
@@ -65,6 +69,7 @@ typedef struct s_ray
 typedef struct s_hit
 {
 	bool			hit;
+	uint32_t		object_id;
 	float			distance;
 	t_point3d		point;
 	t_vector3d		normal;
@@ -114,17 +119,22 @@ typedef struct s_color
 
 typedef struct s_minirt
 {
+	int32_t			selected;
 	mlx_t			*mlx;
 	mlx_image_t		*image;
 	t_ambient		ambient;
 	t_camera		camera;
-	t_vector		lights;
 	t_viewport		viewport;
+	t_vector		lights;
 	t_vector		objects;
 }					t_minirt;
 
 void				minirt_render(t_minirt *minirt);
 t_error				minirt_parse(int fd, t_minirt *minirt);
+
+void				minirt_key_hook(mlx_key_data_t keydata, void *param);
+void				minirt_mouse_hook(mouse_key_t mouse_key, action_t action,
+						modifier_key_t mod, void *param);
 
 t_ray				ray_generate(uint32_t x, uint32_t y,
 						const t_minirt *minirt);

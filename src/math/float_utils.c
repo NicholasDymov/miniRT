@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 09:23:28 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/04 14:06:16 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/05 07:35:52 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ bool	equal(float x, float y)
 {
 	if (x == y)
 		return (true);
-	if (fabsf(x - y) < FT_EPSILON)
+	if (fabsf(x - y) < RT_EPSILON)
 		return (true);
-	return (fabsf(x - y) < fmaxf(fabsf(x), fabsf(y)) * FT_EPSILON);
+	return (fabsf(x - y) < fmaxf(fabsf(x), fabsf(y)) * RT_EPSILON);
 }
 
 bool	range(float x, float start, float stop)

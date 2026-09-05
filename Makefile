@@ -59,7 +59,7 @@ re: fclean all
 
 bonus:
 	@rm -rf $(OBJ_DIR)
-	@$(MAKE) all CFLAGS="$(CFLAGS) -DFT_MANDATORY=0" --no-print-directory
+	@$(MAKE) all CFLAGS="$(CFLAGS) -DRT_MANDATORY=0" --no-print-directory
 	@mv $(NAME) $(NAME)_bonus
 
 debug: fclean

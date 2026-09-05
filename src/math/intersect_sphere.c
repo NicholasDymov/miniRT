@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 12:23:32 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/04 14:10:17 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/05 07:36:27 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ t_hit	intersect_sphere(t_ray ray, const t_object *sphere)
 		return ((t_hit){.hit = false});
 	d_sqrt = sqrtf(d);
 	t = -b - d_sqrt;
-	if (t > FT_EPSILON)
+	if (t > RT_EPSILON)
 		return (hit_build(ray, t, 1.0f, sphere));
 	t = -b + d_sqrt;
-	if (t > FT_EPSILON)
+	if (t > RT_EPSILON)
 		return (hit_build(ray, t, -1.0f, sphere));
 	return ((t_hit){.hit = false});
 }

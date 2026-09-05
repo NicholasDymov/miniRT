@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 12:29:00 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/04 09:45:22 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/05 16:19:58 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ t_ray	ray_generate(uint32_t x, uint32_t y, const t_minirt *minirt)
 	float	py;
 	t_ray	ray;
 
-	px = (2.0f * (x + 0.5f) / WIDTH - 1.0f) * minirt->viewport.scale;
-	py = (1.0f - 2.0f * (y + 0.5f) / HEIGHT) * minirt->viewport.aspect
+	px = (2.0f * (x + 0.5f) / RT_WIDTH - 1.0f) * minirt->viewport.scale;
+	py = (1.0f - 2.0f * (y + 0.5f) / RT_HEIGHT) * minirt->viewport.aspect
 		* minirt->viewport.scale;
 	ray.origin = minirt->camera.position;
 	ray.direction = v_normalize(v_add(v_add(v_scale(px, minirt->viewport.right),
@@ -49,7 +49,10 @@ t_hit	ray_trace(t_ray ray, const t_minirt *minirt)
 		else if (obj->type == OBJ_CYLINDER)
 			hit = intersect_cylinder(ray, obj);
 		if (hit.hit && hit.distance < best_hit.distance)
+		{
 			best_hit = hit;
+			best_hit.object_id = i + 1;
+		}
 		i++;
 	}
 	return (best_hit);

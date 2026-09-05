@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 16:04:08 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/04 09:56:00 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/05 07:35:09 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	viewport_init(t_minirt *minirt)
 
 	fov = minirt->camera.fov;
 	viewport.scale = tanf(fov * (float)M_PI / 360.0f);
-	viewport.aspect = (float)HEIGHT / WIDTH;
+	viewport.aspect = (float)RT_HEIGHT / RT_WIDTH;
 	viewport.forward = minirt->camera.orientation;
 	up = (t_vector3d){0.0f, 1.0f, 0.0f};
 	down = (t_vector3d){0.0f, -1.0f, 0.0f};
@@ -48,17 +48,17 @@ void	minirt_render(t_minirt *minirt)
 	viewport_init(minirt);
 	pixels = (uint32_t *)minirt->image->pixels;
 	y = 0;
-	while (y < HEIGHT)
+	while (y < RT_HEIGHT)
 	{
 		x = 0;
-		while (x < WIDTH)
+		while (x < RT_WIDTH)
 		{
 			ray = ray_generate(x, y, minirt);
 			hit = ray_trace(ray, minirt);
 			if (hit.hit)
-				pixels[y * WIDTH + x] = color_get(hit, minirt);
+				pixels[y * RT_WIDTH + x] = color_get(hit, minirt);
 			else
-				pixels[y * WIDTH + x] = rgba_pack(0, 0, 0, 255);
+				pixels[y * RT_WIDTH + x] = rgba_pack(0, 0, 0, 255);
 			x++;
 		}
 		y++;

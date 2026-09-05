@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/31 17:48:53 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/04 14:29:32 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/05 16:33:54 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ static inline void	color_accumulate(t_color *color, float intensity,
 	color->b += intensity * obj[2] * light[2];
 }
 
-static inline uint32_t	color_clamp(t_color *color)
+static inline uint32_t	color_clamp(t_color *color, uint32_t alpha)
 {
 	static const float	inv_255 = 1.0f / 255.0f;
 
 	color->r = fminf(255.0f, color->r * inv_255);
 	color->g = fminf(255.0f, color->g * inv_255);
 	color->b = fminf(255.0f, color->b * inv_255);
-	return (rgba_pack(color->r, color->g, color->b, 255));
+	return (rgba_pack(color->r, color->g, color->b, alpha));
 }
 
 static inline bool	is_shadowed(t_ray ray, float max_dist,
@@ -96,7 +96,7 @@ uint32_t	color_get(t_hit hit, const t_minirt *minirt)
 	t_light	light;
 
 	color = (t_color){.r = 0.0f, .g = 0.0f, .b = 0.0f};
-	hit.point = v_add(hit.point, v_scale(FT_EPSILON, hit.normal));
+	hit.point = v_add(hit.point, v_scale(RT_EPSILON, hit.normal));
 	color_accumulate(&color, 1.0f, minirt->ambient.color, hit.color);
 	i = 0;
 	while (i < minirt->lights.size)
@@ -105,5 +105,8 @@ uint32_t	color_get(t_hit hit, const t_minirt *minirt)
 		phong_light(hit, light, &color, minirt);
 		i++;
 	}
-	return (color_clamp(&color));
+	if (minirt->selected == (int)hit.object_id)
+		return (color_clamp(&color, 127));
+	else
+		return (color_clamp(&color, 255));
 }
