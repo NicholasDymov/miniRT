@@ -6,7 +6,7 @@
 /*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:35:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/05 16:17:52 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/05 19:40:48 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,18 @@
 
 # ifndef RT_THREADS
 #  define RT_THREADS 8
+# endif
+
+# ifndef RT_TRANS_STEP
+#  define RT_TRANS_STEP 3.0f
+# endif
+
+# ifndef RT_ROT_STEP
+#  define RT_ROT_STEP 0.1f
+# endif
+
+# ifndef RT_RES_STEP
+#  define RT_RES_STEP 0.2f
 # endif
 
 typedef enum e_object_type
