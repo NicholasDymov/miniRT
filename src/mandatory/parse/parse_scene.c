@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 15:20:33 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/05 07:35:27 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/06 09:34:36 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,26 +73,22 @@ t_error	parse_camera(const t_vector *tokens, t_minirt *minirt, bool *flag)
 t_error	parse_light(const t_vector *tokens, t_minirt *minirt, bool *flag)
 {
 	t_error	err;
-	t_light	light;
 	char	**data;
 
 	if (tokens == NULL || minirt == NULL)
 		return (ERR_INVAL);
-	if (RT_MANDATORY && *flag)
+	if (*flag)
 		return (err_msg(ERR_EXTRA_LIGHT, NULL));
 	*flag = true;
 	if (tokens->size != 4)
 		return (err_msg(ERR_PARAMS, "Light"));
 	data = (char **)tokens->data;
-	err = parse_point(data[1], &light.position);
+	err = parse_point(data[1], &minirt->light.position);
 	if (err)
 		return (err);
-	if (ft_safe_atof(data[2], &light.ratio))
+	if (ft_safe_atof(data[2], &minirt->light.ratio))
 		return (err_msg(ERR_PARSE, data[2]));
-	if (!range(light.ratio, 0.0f, 1.0f))
+	if (!range(minirt->light.ratio, 0.0f, 1.0f))
 		return (err_msg(ERR_LIGHT, NULL));
-	err = parse_color(data[3], &light.color);
-	if (err)
-		return (err);
-	return (vector_push(&minirt->lights, &light));
+	return (parse_color(data[3], &minirt->light.color));
 }

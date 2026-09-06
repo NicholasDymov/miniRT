@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 13:19:34 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/05 16:43:31 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/06 09:31:23 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ static t_error	minirt_init(t_minirt *minirt)
 	minirt->mlx = NULL;
 	if (vector_init(&minirt->objects, sizeof(t_object), 4))
 		return (perror("malloc"), ERR_NOMEM);
-	if (vector_init(&minirt->lights, sizeof(t_light), 1))
-		return (perror("malloc"), ERR_NOMEM);
 	minirt->mlx = mlx_init(RT_WIDTH, RT_HEIGHT, "miniRT", 0);
 	if (minirt->mlx == NULL)
 		return (err_msg(ERR_MLX, mlx_strerror(mlx_errno)));
@@ -48,7 +46,6 @@ static void	minirt_destroy(t_minirt *minirt)
 	if (minirt->mlx != NULL)
 		mlx_terminate(minirt->mlx);
 	vector_destroy(&minirt->objects, NULL);
-	vector_destroy(&minirt->lights, NULL);
 }
 
 static bool	filename_valid(const char *filename)

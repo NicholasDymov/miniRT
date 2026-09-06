@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/31 17:48:53 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/05 16:33:54 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/06 09:26:47 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,30 +81,16 @@ static inline void	phong_light(t_hit hit, t_light light, t_color *color,
 	if (is_shadowed(light_ray, light_distance, minirt))
 		return ;
 	color_accumulate(color, light.ratio * cosine, light.color, hit.color);
-	cosine = v_dot(hit.camera, v_sub(v_scale(2.0f * cosine, hit.normal),
-				light_ray.direction));
-	if (cosine <= 0.0f)
-		return ;
-	color_accumulate(color, 0.5f * light.ratio * pow32(cosine), light.color,
-		0xFFFFFFFF);
 }
 
 uint32_t	color_get(t_hit hit, const t_minirt *minirt)
 {
 	t_color	color;
-	size_t	i;
-	t_light	light;
 
 	color = (t_color){.r = 0.0f, .g = 0.0f, .b = 0.0f};
 	hit.point = v_add(hit.point, v_scale(RT_EPSILON, hit.normal));
 	color_accumulate(&color, 1.0f, minirt->ambient.color, hit.color);
-	i = 0;
-	while (i < minirt->lights.size)
-	{
-		light = *(t_light *)vector_get(&minirt->lights, i);
-		phong_light(hit, light, &color, minirt);
-		i++;
-	}
+	phong_light(hit, minirt->light, &color, minirt);
 	if (minirt->selected == (int)hit.object_id)
 		return (color_clamp(&color, 127));
 	else

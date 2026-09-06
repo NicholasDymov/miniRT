@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 12:23:32 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/05 07:37:33 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/06 09:25:07 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static inline t_hit	hit_build_surface(t_ray ray, float t, float direction,
 	hit.point = v_add(ray.origin, v_scale(t, ray.direction));
 	hit.normal = v_scale(direction / cylinder->radius,
 			v_project(v_sub(hit.point, cylinder->center), cylinder->normal));
-	hit.camera = v_scale(-1.0f, ray.direction);
 	hit.color = cylinder->color;
 	return (hit);
 }
@@ -65,7 +64,6 @@ static inline t_hit	hit_build_disk(t_ray ray, float t, t_vector3d normal,
 	hit.distance = t;
 	hit.point = v_add(ray.origin, v_scale(t, ray.direction));
 	hit.normal = normal;
-	hit.camera = v_scale(-1.0f, ray.direction);
 	hit.color = object->color;
 	return (hit);
 }

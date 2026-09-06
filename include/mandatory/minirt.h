@@ -6,7 +6,7 @@
 /*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:35:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/05 19:40:48 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/06 09:25:48 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,6 @@
 
 # ifndef RT_HEIGHT
 #  define RT_HEIGHT 800
-# endif
-
-# ifndef RT_MANDATORY
-#  define RT_MANDATORY 1
 # endif
 
 # ifndef RT_EPSILON
@@ -85,7 +81,6 @@ typedef struct s_hit
 	float			distance;
 	t_point3d		point;
 	t_vector3d		normal;
-	t_vector3d		camera;
 	uint32_t		color;
 }					t_hit;
 
@@ -136,8 +131,8 @@ typedef struct s_minirt
 	mlx_image_t		*image;
 	t_ambient		ambient;
 	t_camera		camera;
+	t_light			light;
 	t_viewport		viewport;
-	t_vector		lights;
 	t_vector		objects;
 }					t_minirt;
 

@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/05 15:28:44 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/05 23:24:05 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/06 09:29:47 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static inline void	hook_translate(keys_t key, t_minirt *minirt)
 	t_point3d	*pos;
 
 	if (minirt->selected == -1)
-		pos = &((t_light *)vector_get(&minirt->lights, 0))->position;
+		pos = &minirt->light.position;
 	else if (minirt->selected == 0)
 		pos = &minirt->camera.position;
 	else

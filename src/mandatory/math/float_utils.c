@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 09:23:28 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/05 07:35:52 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/06 09:19:51 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,5 @@ bool	range(float x, float start, float stop)
 
 float	square(float x)
 {
-	return (x * x);
-}
-
-float	pow32(float x)
-{
-	x *= x;
-	x *= x;
-	x *= x;
-	x *= x;
 	return (x * x);
 }
