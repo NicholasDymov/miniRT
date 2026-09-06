@@ -1,21 +1,29 @@
 NAME := miniRT
+NAME_BONUS := miniRT_bonus
 CC ?= cc
 CFLAGS ?= -Wall -Wextra -Werror
-LDFLAGS ?= -ldl -lglfw -pthread -lm
+LDFLAGS ?= -ldl -lglfw -lm
 
-SRC_DIR := src
-INC_DIR := include
-OBJ_DIR := obj
+SRC_DIR := src/mandatory
+INC_DIR := include/mandatory
+OBJ_DIR := obj/mandatory
+
+SRC_BONUS_DIR := src/bonus
+INC_BONUS_DIR := include/bonus
+OBJ_BONUS_DIR := obj/bonus
+
 LIB_DIR := lib
-
-HEADERS := -I$(INC_DIR)
 
 SRCS := $(shell find $(SRC_DIR) -name "*.c")
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 DEPS := $(OBJS:%.o=%.d)
 
+SRCS_BONUS := $(shell find $(SRC_BONUS_DIR) -name "*.c")
+OBJS_BONUS := $(SRCS_BONUS:$(SRC_BONUS_DIR)/%.c=$(OBJ_BONUS_DIR)/%.o)
+DEPS_BONUS := $(OBJS_BONUS:%.o=%.d)
+
 LIBFT_DIR := $(LIB_DIR)/libft
-HEADERS += -I$(LIBFT_DIR)/include
+HEADERS := -I$(LIBFT_DIR)/include
 LIBFT = $(LIBFT_DIR)/libft.a
 
 MLX42_DIR := $(LIB_DIR)/MLX42
@@ -23,11 +31,18 @@ HEADERS += -I$(MLX42_DIR)/include
 MLX42 = $(MLX42_DIR)/build/libmlx42.a
 
 $(NAME): $(OBJS) $(LIBFT) $(MLX42)
-	$(CC) $(CFLAGS) $(HEADERS) $(OBJS) $(LIBFT) $(MLX42) $(LDFLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(HEADERS) -I$(INC_DIR) $(OBJS) $(LIBFT) $(MLX42) $(LDFLAGS) -o $(NAME)
+
+$(NAME_BONUS): $(OBJS_BONUS) $(LIBFT) $(MLX42)
+	$(CC) $(CFLAGS) $(HEADERS) -I$(INC_BONUS_DIR) $(OBJS_BONUS) $(LIBFT) $(MLX42) $(LDFLAGS) -pthread -o $(NAME_BONUS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) $(HEADERS) -MMD -MP -c $< -o $@
+	@$(CC) $(CFLAGS) $(HEADERS) -I$(INC_DIR) -MMD -MP -c $< -o $@
+
+$(OBJ_BONUS_DIR)/%.o: $(SRC_BONUS_DIR)/%.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(HEADERS) -I$(INC_BONUS_DIR) -MMD -MP -c $< -o $@
 
 $(LIBFT):
 	@if [ ! -d "$(LIBFT_DIR)" ] || [ ! -f $(LIBFT_DIR)/Makefile ]; then \
@@ -42,12 +57,18 @@ $(MLX42):
 	@cmake $(MLX42_DIR) -B $(MLX42_DIR)/build -DDEBUG=0
 	@cmake --build $(MLX42_DIR)/build -j4
 
--include $(DEPS)
+-include $(DEPS) $(DEPS_BONUS)
 
 all: $(NAME)
 
+bonus: $(NAME_BONUS)
+
+libft: $(LIBFT)
+
+mlx42: $(MLX42)
+
 clean:
-	@rm -rf $(OBJ_DIR)
+	@rm -rf obj
 	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory clean
 
 fclean: clean
@@ -57,27 +78,18 @@ fclean: clean
 
 re: fclean all
 
-bonus:
-	@rm -rf $(OBJ_DIR)
-	@$(MAKE) all CFLAGS="$(CFLAGS) -DRT_MANDATORY=0" --no-print-directory
-	@mv $(NAME) $(NAME)_bonus
-
 debug: fclean
 	@$(MAKE) -C $(LIBFT_DIR) debug
 	@cmake $(MLX42_DIR) -B $(MLX42_DIR)/build -DDEBUG=1
 	@cmake --build $(MLX42_DIR)/build -j4
-	@$(MAKE) all CFLAGS="$(CFLAGS) -g3" --no-print-directory
+	@$(MAKE) all bonus CFLAGS="$(CFLAGS) -g3" --no-print-directory
 
 sanitize: fclean
 	@$(MAKE) -C $(LIBFT_DIR) sanitize
-	@$(MAKE) all CFLAGS="$(CFLAGS) -g3 -fsanitize=address,undefined" LDFLAGS="$(LDFLAGS) -fsanitize=address,undefined" --no-print-directory
+	@$(MAKE) all bonus CFLAGS="$(CFLAGS) -g3 -fsanitize=address,undefined" LDFLAGS="$(LDFLAGS) -fsanitize=address,undefined" --no-print-directory
 
 fast: fclean
 	@$(MAKE) -C $(LIBFT_DIR) fast
-	@$(MAKE) all CFLAGS="$(CFLAGS) -O3 -march=native -ffast-math -flto" LDFLAGS="$(LDFLAGS) -flto" --no-print-directory
-
-libft: $(LIBFT)
-
-mlx42: $(MLX42)
+	@$(MAKE) all bonus CFLAGS="$(CFLAGS) -O3 -march=native -ffast-math -flto" LDFLAGS="$(LDFLAGS) -flto" --no-print-directory
 
 .PHONY: all clean fclean re bonus debug sanitize fast libft mlx42
