@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/31 17:48:53 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/05 16:33:54 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/06 18:05:07 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ static inline bool	is_shadowed(t_ray ray, float max_dist,
 			hit = intersect_plane(ray, obj);
 		else if (obj->type == OBJ_CYLINDER)
 			hit = intersect_cylinder(ray, obj);
+		else if (obj->type == OBJ_CONE)
+			hit = intersect_cone(ray, obj);
 		if (hit.hit && hit.distance < max_dist)
 			return (true);
 		i++;

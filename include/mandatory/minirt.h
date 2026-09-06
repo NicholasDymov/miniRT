@@ -6,7 +6,7 @@
 /*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:35:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/06 10:14:54 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/06 10:22:22 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@
 
 # ifndef RT_EPSILON
 #  define RT_EPSILON 1e-3f
-# endif
-
-# ifndef RT_THREADS
-#  define RT_THREADS 8
 # endif
 
 # ifndef RT_TRANS_STEP

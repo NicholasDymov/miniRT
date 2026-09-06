@@ -6,13 +6,40 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 15:19:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/02 17:41:26 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/06 15:03:15 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_error.h"
 #include "ft_float.h"
+#include "ft_string.h"
+#include "ft_vector.h"
 #include "minirt.h"
+
+static inline t_object_type	get_type(const t_vector *tokens)
+{
+	const char	*type;
+
+	type = (const char *)vector_get(tokens, 0);
+	if (ft_strcmp(type, "cy") == 0)
+		return (OBJ_CYLINDER);
+	else
+		return (OBJ_CONE);
+}
+
+static inline void	post_process(t_object *obj)
+{
+	float	k;
+
+	obj->radius *= 0.5f;
+	if (obj->type == OBJ_CYLINDER)
+		obj->height *= 0.5f;
+	else
+	{
+		k = obj->radius / obj->height;
+		obj->k_2 = k * k;
+	}
+}
 
 t_error	parse_sphere(const t_vector *tokens, t_minirt *minirt)
 {
@@ -62,31 +89,30 @@ t_error	parse_plane(const t_vector *tokens, t_minirt *minirt)
 	return (vector_push(&minirt->objects, &plane));
 }
 
-t_error	parse_cylinder(const t_vector *tokens, t_minirt *minirt)
+t_error	parse_cylinder_cone(const t_vector *tokens, t_minirt *minirt)
 {
 	t_error		err;
-	t_object	cylinder;
+	t_object	obj;
 	char		**data;
 
 	if (tokens == NULL || minirt == NULL)
 		return (ERR_INVAL);
 	if (tokens->size != 6)
-		return (err_msg(ERR_PARAMS, "Cylinder"));
-	cylinder.type = OBJ_CYLINDER;
+		return (err_msg(ERR_PARAMS, "Cylinder/Cone"));
+	obj.type = get_type(tokens);
 	data = (char **)tokens->data;
-	err = parse_point(data[1], &cylinder.center);
+	err = parse_point(data[1], &obj.center);
 	if (err)
 		return (err);
-	err = parse_vector(data[2], &cylinder.normal);
+	err = parse_vector(data[2], &obj.normal);
 	if (err)
 		return (err);
-	if (ft_safe_atof(data[3], &cylinder.radius))
+	if (ft_safe_atof(data[3], &obj.radius))
 		return (err_msg(ERR_PARSE, data[3]));
-	cylinder.radius *= 0.5f;
-	if (ft_safe_atof(data[4], &cylinder.height))
+	if (ft_safe_atof(data[4], &obj.height))
 		return (err_msg(ERR_PARSE, data[4]));
-	cylinder.height *= 0.5f;
-	if (parse_color(data[5], &cylinder.color))
+	if (parse_color(data[5], &obj.color))
 		return (ERR_PARSE);
-	return (vector_push(&minirt->objects, &cylinder));
+	post_process(&obj);
+	return (vector_push(&minirt->objects, &obj));
 }

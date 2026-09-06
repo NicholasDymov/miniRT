@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 15:20:33 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/05 07:35:27 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/06 10:24:21 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ t_error	parse_light(const t_vector *tokens, t_minirt *minirt, bool *flag)
 
 	if (tokens == NULL || minirt == NULL)
 		return (ERR_INVAL);
-	if (RT_MANDATORY && *flag)
-		return (err_msg(ERR_EXTRA_LIGHT, NULL));
 	*flag = true;
 	if (tokens->size != 4)
 		return (err_msg(ERR_PARAMS, "Light"));

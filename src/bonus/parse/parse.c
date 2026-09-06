@@ -6,7 +6,7 @@
 /*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/30 09:55:51 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/02 15:59:27 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/06 12:51:05 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ static t_error	parse_line(char *line, t_minirt *minirt, t_parse_flags *flags)
 		err = parse_sphere(&tokens, minirt);
 	else if (ft_strcmp(type, "pl") == 0)
 		err = parse_plane(&tokens, minirt);
-	else if (ft_strcmp(type, "cy") == 0)
-		err = parse_cylinder(&tokens, minirt);
+	else if (ft_strcmp(type, "cy") == 0 || ft_strcmp(type, "co") == 0)
+		err = parse_cylinder_cone(&tokens, minirt);
 	else
 		err = err_msg(ERR_TYPE, type);
 	return (vector_destroy(&tokens, free_ptr), err);

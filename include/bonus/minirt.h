@@ -6,7 +6,7 @@
 /*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:35:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/05 19:40:48 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/06 14:41:06 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,6 @@
 
 # ifndef RT_HEIGHT
 #  define RT_HEIGHT 800
-# endif
-
-# ifndef RT_MANDATORY
-#  define RT_MANDATORY 1
 # endif
 
 # ifndef RT_EPSILON
@@ -57,7 +53,15 @@ typedef enum e_object_type
 	OBJ_SPHERE,
 	OBJ_PLANE,
 	OBJ_CYLINDER,
+	OBJ_CONE,
 }					t_object_type;
+
+typedef enum e_surface_type
+{
+	SURF_SOLID,
+	SURF_CHECK,
+	SURF_BUMP,
+}					t_surface_type;
 
 typedef struct s_ambient
 {
@@ -69,7 +73,7 @@ typedef struct s_camera
 {
 	t_point3d		position;
 	t_vector3d		orientation;
-	uint8_t			fov;
+	float			fov;
 }					t_camera;
 
 typedef struct s_ray
@@ -80,13 +84,15 @@ typedef struct s_ray
 
 typedef struct s_hit
 {
-	bool			hit;
-	uint32_t		object_id;
-	float			distance;
 	t_point3d		point;
 	t_vector3d		normal;
 	t_vector3d		camera;
+	float			u;
+	float			v;
+	float			distance;
+	uint32_t		object_id;
 	uint32_t		color;
+	bool			hit;
 }					t_hit;
 
 typedef struct s_viewport
@@ -107,12 +113,16 @@ typedef struct s_light
 
 typedef struct s_object
 {
+	mlx_texture_t	*bump_map;
 	t_point3d		center;
 	t_vector3d		normal;
 	float			radius;
 	float			height;
+	float			k_2;
 	uint32_t		color;
+	uint32_t		color_alt;
 	t_object_type	type;
+	t_surface_type	surface;
 }					t_object;
 
 typedef struct s_parse_flags
@@ -131,14 +141,14 @@ typedef struct s_color
 
 typedef struct s_minirt
 {
-	int32_t			selected;
 	mlx_t			*mlx;
 	mlx_image_t		*image;
+	t_vector		objects;
+	t_vector		lights;
 	t_ambient		ambient;
 	t_camera		camera;
 	t_viewport		viewport;
-	t_vector		lights;
-	t_vector		objects;
+	int32_t			selected;
 }					t_minirt;
 
 void				minirt_render(t_minirt *minirt);
@@ -155,6 +165,7 @@ t_hit				ray_trace(t_ray ray, const t_minirt *minirt);
 t_hit				intersect_sphere(t_ray ray, const t_object *sphere);
 t_hit				intersect_plane(t_ray ray, const t_object *plane);
 t_hit				intersect_cylinder(t_ray ray, const t_object *cylinder);
+t_hit				intersect_cone(t_ray ray, const t_object *cone);
 
 uint32_t			color_get(t_hit hit, const t_minirt *minirt);
 uint32_t			rgba_pack(uint32_t r, uint32_t g, uint32_t b, uint32_t a);
@@ -168,7 +179,8 @@ t_error				parse_light(const t_vector *tokens, t_minirt *minirt,
 
 t_error				parse_sphere(const t_vector *tokens, t_minirt *minirt);
 t_error				parse_plane(const t_vector *tokens, t_minirt *minirt);
-t_error				parse_cylinder(const t_vector *tokens, t_minirt *minirt);
+t_error				parse_cylinder_cone(const t_vector *tokens,
+						t_minirt *minirt);
 
 t_error				parse_color(const char *token, uint32_t *color);
 t_error				parse_point(const char *token, t_point3d *point);
