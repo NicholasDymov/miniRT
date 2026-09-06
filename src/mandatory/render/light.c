@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/31 17:48:53 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/06 09:26:47 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/06 09:54:03 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static inline void	phong_light(t_hit hit, t_light light, t_color *color,
 	cosine *= light_distance_inv;
 	if (is_shadowed(light_ray, light_distance, minirt))
 		return ;
-	color_accumulate(color, light.ratio * cosine, light.color, hit.color);
+	color_accumulate(color, light.ratio * cosine, 0xFFFFFFFF, hit.color);
 }
 
 uint32_t	color_get(t_hit hit, const t_minirt *minirt)

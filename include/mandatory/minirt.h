@@ -6,7 +6,7 @@
 /*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:35:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/06 09:25:48 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/06 10:14:54 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_camera
 {
 	t_point3d		position;
 	t_vector3d		orientation;
-	uint8_t			fov;
+	float			fov;
 }					t_camera;
 
 typedef struct s_ray
@@ -76,12 +76,12 @@ typedef struct s_ray
 
 typedef struct s_hit
 {
-	bool			hit;
 	uint32_t		object_id;
 	float			distance;
 	t_point3d		point;
 	t_vector3d		normal;
 	uint32_t		color;
+	bool			hit;
 }					t_hit;
 
 typedef struct s_viewport
@@ -126,14 +126,14 @@ typedef struct s_color
 
 typedef struct s_minirt
 {
-	int32_t			selected;
 	mlx_t			*mlx;
 	mlx_image_t		*image;
+	t_vector		objects;
 	t_ambient		ambient;
 	t_camera		camera;
 	t_light			light;
 	t_viewport		viewport;
-	t_vector		objects;
+	int32_t			selected;
 }					t_minirt;
 
 void				minirt_render(t_minirt *minirt);
