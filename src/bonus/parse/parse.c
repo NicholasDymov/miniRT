@@ -6,7 +6,7 @@
 /*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/30 09:55:51 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/06 12:51:05 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/08 16:02:08 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_error	parse_line(char *line, t_minirt *minirt, t_parse_flags *flags)
 	char		*type;
 	t_error		err;
 
-	if (ft_split_words(&tokens, line, ft_isspace, 6))
+	if (ft_split_words(&tokens, line, ft_isspace, 7))
 		return (perror("malloc"), ERR_NOMEM);
 	if (tokens.size == 0)
 		return (vector_destroy(&tokens, free_ptr), OK);

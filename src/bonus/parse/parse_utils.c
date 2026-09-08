@@ -6,10 +6,11 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 15:21:37 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/04 09:31:02 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/08 16:12:58 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_error.h"
 #include "ft_float.h"
 #include "ft_int.h"
 #include "ft_math.h"
@@ -23,7 +24,7 @@ static void	free_ptr(void *ptr)
 	free(*(void **)ptr);
 }
 
-t_error	parse_color(const char *token, uint32_t *color)
+t_error	parse_color(const char *token, uint32_t *color, bool verbose)
 {
 	t_vector	rgb_vec;
 	char		**data;
@@ -37,15 +38,17 @@ t_error	parse_color(const char *token, uint32_t *color)
 	err = OK;
 	data = (char **)rgb_vec.data;
 	if (rgb_vec.size != 3)
-		err = err_msg(ERR_PARSE, token);
+		err = ERR_PARSE;
 	else if (ft_safe_atoi(data[0], &rgb[0]) || ft_safe_atoi(data[1], &rgb[1])
 		|| ft_safe_atoi(data[2], &rgb[2]))
-		err = err_msg(ERR_PARSE, token);
+		err = ERR_PARSE;
 	else if (!range(rgb[0], 0, 255) || !range(rgb[1], 0, 255) || !range(rgb[2],
 			0, 255))
-		err = err_msg(ERR_RGB, token);
+		err = ERR_RGB;
 	else
 		*color = rgba_pack(rgb[0], rgb[1], rgb[2], 255);
+	if (verbose && err)
+		(void)err_msg(err, token);
 	return (vector_destroy(&rgb_vec, free_ptr), err);
 }
 
@@ -94,4 +97,22 @@ t_error	parse_vector(const char *token, t_vector3d *vec)
 	else
 		err = OK;
 	return (vector_destroy(&coords, free_ptr), err);
+}
+
+t_error	parse_texture(const char *token, t_object *obj)
+{
+	size_t	len;
+
+	if (token == NULL || obj == NULL)
+		return (ERR_INVAL);
+	if (parse_color(token, &obj->color_alt, false) == OK)
+		return (obj->surface = SURF_CHECK, OK);
+	len = ft_strlen(token);
+	if (len < 4 || ft_strcmp(token + len - 4, ".png") != 0)
+		return (err_msg(ERR_PARSE, token));
+	obj->bump_map = mlx_load_png(token);
+	if (obj->bump_map == NULL)
+		return (err_msg(ERR_PARSE, token));
+	obj->surface = SURF_BUMP;
+	return (OK);
 }

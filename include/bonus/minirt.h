@@ -6,7 +6,7 @@
 /*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:35:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/08 11:00:48 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/08 15:46:32 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,9 +182,11 @@ t_error				parse_plane(const t_vector *tokens, t_minirt *minirt);
 t_error				parse_cylinder_cone(const t_vector *tokens,
 						t_minirt *minirt);
 
-t_error				parse_color(const char *token, uint32_t *color);
+t_error				parse_color(const char *token, uint32_t *color,
+						bool verbose);
 t_error				parse_point(const char *token, t_point3d *point);
 t_error				parse_vector(const char *token, t_vector3d *vec);
+t_error				parse_texture(const char *token, t_object *obj);
 
 t_error				err_msg(t_error error, const char *message);
 

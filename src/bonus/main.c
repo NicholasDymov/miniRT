@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 13:19:34 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/05 16:43:31 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/08 16:06:13 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+static void	object_destroy(void *ptr)
+{
+	t_object	*obj;
+
+	obj = (t_object *)ptr;
+	if (obj->surface == SURF_BUMP)
+		mlx_delete_texture(obj->bump_map);
+}
 
 static t_error	minirt_init(t_minirt *minirt)
 {
@@ -47,7 +56,7 @@ static void	minirt_destroy(t_minirt *minirt)
 {
 	if (minirt->mlx != NULL)
 		mlx_terminate(minirt->mlx);
-	vector_destroy(&minirt->objects, NULL);
+	vector_destroy(&minirt->objects, object_destroy);
 	vector_destroy(&minirt->lights, NULL);
 }
 

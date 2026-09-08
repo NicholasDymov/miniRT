@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 15:20:33 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/06 10:24:21 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/08 15:49:02 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_error	parse_ambient(const t_vector *tokens, t_minirt *minirt, bool *flag)
 		return (err_msg(ERR_PARSE, data[1]));
 	if (!range(minirt->ambient.ratio, 0.0f, 1.0f))
 		return (err_msg(ERR_AMB, NULL));
-	err = parse_color(data[2], &minirt->ambient.color);
+	err = parse_color(data[2], &minirt->ambient.color, true);
 	if (err)
 		return (err);
 	rgba = (uint8_t *)&minirt->ambient.color;
@@ -89,7 +89,7 @@ t_error	parse_light(const t_vector *tokens, t_minirt *minirt, bool *flag)
 		return (err_msg(ERR_PARSE, data[2]));
 	if (!range(light.ratio, 0.0f, 1.0f))
 		return (err_msg(ERR_LIGHT, NULL));
-	err = parse_color(data[3], &light.color);
+	err = parse_color(data[3], &light.color, true);
 	if (err)
 		return (err);
 	return (vector_push(&minirt->lights, &light));
