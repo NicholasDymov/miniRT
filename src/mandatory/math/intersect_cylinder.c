@@ -6,15 +6,16 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 12:23:32 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/06 09:25:07 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/08 11:22:26 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_math.h"
 #include "minirt.h"
+#include <float.h>
 #include <math.h>
 
-static inline t_hit	hit_build_surface(t_ray ray, float t, float direction,
+static inline t_hit	hit_build_surface(t_ray ray, float t,
 		const t_object *cylinder)
 {
 	t_hit	hit;
@@ -22,13 +23,15 @@ static inline t_hit	hit_build_surface(t_ray ray, float t, float direction,
 	hit.hit = true;
 	hit.distance = t;
 	hit.point = v_add(ray.origin, v_scale(t, ray.direction));
-	hit.normal = v_scale(direction / cylinder->radius,
-			v_project(v_sub(hit.point, cylinder->center), cylinder->normal));
+	hit.normal = v_scale(1.0f / cylinder->radius, v_project(v_sub(hit.point,
+					cylinder->center), cylinder->normal));
+	if (v_dot(hit.normal, ray.direction) > 0.0f)
+		hit.normal = v_scale(-1.0f, hit.normal);
 	hit.color = cylinder->color;
 	return (hit);
 }
 
-static inline t_hit	intersect_surface(t_ray ray, const t_object *cylinder,
+static inline float	intersect_surface(t_ray ray, const t_object *cylinder,
 		t_params *prms)
 {
 	float	d;
@@ -40,79 +43,82 @@ static inline t_hit	intersect_surface(t_ray ray, const t_object *cylinder,
 	prms->b = v_dot(ray.direction, prms->co) - prms->d_n * prms->co_n;
 	prms->c = v_square(prms->co) - prms->co_n * prms->co_n;
 	if (prms->a < RT_EPSILON)
-		return ((t_hit){.hit = false});
+		return (FLT_MAX);
 	d = prms->b * prms->b - prms->a * (prms->c - prms->r_2);
 	if (d < 0.0f)
-		return ((t_hit){.hit = false});
+		return (FLT_MAX);
 	d_sqrt = sqrtf(d);
 	a_inv = 1.0f / prms->a;
 	t = (-prms->b - d_sqrt) * a_inv;
 	if (t > RT_EPSILON && fabsf(prms->co_n + t * prms->d_n) <= cylinder->height)
-		return (hit_build_surface(ray, t, 1.0f, cylinder));
+		return (t);
 	t = (-prms->b + d_sqrt) * a_inv;
 	if (t > RT_EPSILON && fabsf(prms->co_n + t * prms->d_n) <= cylinder->height)
-		return (hit_build_surface(ray, t, -1.0f, cylinder));
-	return ((t_hit){.hit = false});
+		return (t);
+	return (FLT_MAX);
 }
 
-static inline t_hit	hit_build_disk(t_ray ray, float t, t_vector3d normal,
-		const t_object *object)
+static inline t_hit	hit_build_disk(t_ray ray, float t, const t_object *cylinder,
+		float d_n)
 {
 	t_hit	hit;
 
 	hit.hit = true;
 	hit.distance = t;
 	hit.point = v_add(ray.origin, v_scale(t, ray.direction));
-	hit.normal = normal;
-	hit.color = object->color;
+	if (d_n > 0.0f)
+		hit.normal = v_scale(-1.0f, cylinder->normal);
+	else
+		hit.normal = cylinder->normal;
+	hit.color = cylinder->color;
 	return (hit);
 }
 
-static inline t_hit	intersect_disk(t_ray ray, const t_object *cylinder,
-		t_params *prms, float t_max)
+static inline float	intersect_disk(const t_object *cylinder, t_params *prms)
 {
-	float		t1;
-	float		t2;
-	float		d_n_inv;
-	t_vector3d	hit_normal;
+	float	t1;
+	float	t2;
+	float	d_n_inv;
 
 	d_n_inv = 1.0f / prms->d_n;
-	t1 = (-prms->co_n - cylinder->height) * d_n_inv;
-	t2 = (-prms->co_n + cylinder->height) * d_n_inv;
-	if (prms->d_n > 0.0f)
-		hit_normal = v_scale(-1.0f, cylinder->normal);
+	if (d_n_inv > 0.0f)
+	{
+		t1 = (-prms->co_n - cylinder->height) * d_n_inv;
+		t2 = (-prms->co_n + cylinder->height) * d_n_inv;
+	}
 	else
-		hit_normal = cylinder->normal;
-	if (t1 > RT_EPSILON && t1 < t_max && (t2 <= RT_EPSILON || t1 < t2)
-		&& (prms->a * t1 + 2 * prms->b) * t1 + prms->c <= prms->r_2)
-		return (hit_build_disk(ray, t1, hit_normal, cylinder));
-	if (t2 > RT_EPSILON && t2 < t_max && (prms->a * t2 + 2 * prms->b) * t2
+	{
+		t1 = (-prms->co_n + cylinder->height) * d_n_inv;
+		t2 = (-prms->co_n - cylinder->height) * d_n_inv;
+	}
+	if (t1 > RT_EPSILON && (prms->a * t1 + 2 * prms->b) * t1
 		+ prms->c <= prms->r_2)
-		return (hit_build_disk(ray, t2, hit_normal, cylinder));
-	else
-		return ((t_hit){.hit = false});
+		return (t1);
+	if (t2 > RT_EPSILON && (prms->a * t2 + 2 * prms->b) * t2
+		+ prms->c <= prms->r_2)
+		return (t2);
+	return (FLT_MAX);
 }
 
 t_hit	intersect_cylinder(t_ray ray, const t_object *cylinder)
 {
-	t_hit		hit_surface;
-	t_hit		hit_disk;
+	float		t_surface;
+	float		t_disk;
 	t_params	params;
 
 	params.d_n = v_dot(ray.direction, cylinder->normal);
 	params.co = v_sub(ray.origin, cylinder->center);
 	params.co_n = v_dot(params.co, cylinder->normal);
 	params.r_2 = cylinder->radius * cylinder->radius;
-	hit_surface = intersect_surface(ray, cylinder, &params);
+	t_surface = intersect_surface(ray, cylinder, &params);
 	if (equal(params.d_n, 0.0f))
-		return (hit_surface);
-	if (hit_surface.hit)
-		hit_disk = intersect_disk(ray, cylinder, &params, hit_surface.distance);
+		t_disk = FLT_MAX;
 	else
-		hit_disk = intersect_disk(ray, cylinder, &params, INFINITY);
-	if (hit_disk.hit && (!hit_surface.hit
-			|| hit_disk.distance < hit_surface.distance))
-		return (hit_disk);
+		t_disk = intersect_disk(cylinder, &params);
+	if (t_disk < t_surface)
+		return (hit_build_disk(ray, t_disk, cylinder, params.d_n));
+	else if (t_surface < FLT_MAX)
+		return (hit_build_surface(ray, t_surface, cylinder));
 	else
-		return (hit_surface);
+		return ((t_hit){.hit = false});
 }

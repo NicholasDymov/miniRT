@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 15:19:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/06 15:03:15 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/08 11:27:15 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static inline t_object_type	get_type(const t_vector *tokens)
 {
 	const char	*type;
 
-	type = (const char *)vector_get(tokens, 0);
+	type = *(const char **)vector_get(tokens, 0);
 	if (ft_strcmp(type, "cy") == 0)
 		return (OBJ_CYLINDER);
 	else
@@ -33,11 +33,14 @@ static inline void	post_process(t_object *obj)
 
 	obj->radius *= 0.5f;
 	if (obj->type == OBJ_CYLINDER)
+	{
 		obj->height *= 0.5f;
+		obj->r_2 = obj->radius * obj->radius;
+	}
 	else
 	{
 		k = obj->radius / obj->height;
-		obj->k_2 = k * k;
+		obj->r_2 = 1 + k * k;
 	}
 }
 

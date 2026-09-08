@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:58:02 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/06 14:41:46 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/08 10:12:52 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct s_params
 {
 	float			d_n;
 	float			co_n;
-	float			r_2;
 	float			a;
 	float			b;
 	float			c;

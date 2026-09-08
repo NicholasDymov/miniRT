@@ -6,7 +6,7 @@
 /*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:35:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/06 14:41:06 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/08 11:00:48 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ typedef struct s_object
 	t_vector3d		normal;
 	float			radius;
 	float			height;
-	float			k_2;
+	float			r_2;
 	uint32_t		color;
 	uint32_t		color_alt;
 	t_object_type	type;
