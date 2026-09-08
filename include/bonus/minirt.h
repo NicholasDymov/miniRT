@@ -6,7 +6,7 @@
 /*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:35:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/08 18:01:06 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/08 19:20:34 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ typedef struct s_hit
 	t_point3d		point;
 	t_vector3d		normal;
 	t_vector3d		camera;
-	float			u;
-	float			v;
 	float			distance;
 	uint32_t		object_id;
 	uint32_t		color;
@@ -177,7 +175,11 @@ bool				intersect_cone_fast(t_ray ray, const t_object *cone,
 						float max_dist);
 
 uint32_t			color_get(t_hit *hit, const t_minirt *minirt);
+uint32_t			color_checker(float u, float v, uint32_t color1,
+						uint32_t color2);
 uint32_t			rgba_pack(uint32_t r, uint32_t g, uint32_t b, uint32_t a);
+t_vector3d			color_bump(float u, float v, t_vector3d normal,
+						mlx_texture_t *bump_map);
 
 t_error				parse_ambient(const t_vector *tokens, t_minirt *minirt,
 						bool *flag);

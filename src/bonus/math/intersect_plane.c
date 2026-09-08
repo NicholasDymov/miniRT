@@ -6,38 +6,40 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 12:23:32 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/08 18:08:48 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/08 19:21:04 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_math.h"
 #include "minirt.h"
 #include <math.h>
-#include <threads.h>
 
 static inline t_hit	hit_build(t_ray ray, float t, t_vector3d normal,
 		const t_object *object)
 {
 	t_hit		hit;
-	t_vector3d	up;
 	t_vector3d	cp;
 	t_vector3d	e1;
+	float		u;
+	float		v;
 
-	hit.hit = true;
-	hit.distance = t;
+	hit = (t_hit){.hit = true, .distance = t, .normal = normal};
 	hit.point = v_add(ray.origin, v_scale(t, ray.dir));
-	hit.normal = normal;
 	hit.camera = v_scale(-1.0f, ray.dir);
+	hit.color = object->color;
 	if (object->surface == SURF_SOLID)
-		return (hit.color = object->color, hit);
+		return (hit);
 	if (fabsf(hit.normal.y) + RT_EPSILON > 1.0f)
-		up = (t_vector3d){1.0f, 0.0f, 0.0f};
+		e1 = v_normalize(v_cross(hit.normal, (t_vector3d){1.0f, 0.0f, 0.0f}));
 	else
-		up = (t_vector3d){0.0f, 1.0f, 0.0f};
+		e1 = v_normalize(v_cross(hit.normal, (t_vector3d){0.0f, 1.0f, 0.0f}));
 	cp = v_sub(hit.point, object->center);
-	e1 = v_normalize(v_cross(hit.normal, up));
-	hit.u = v_dot(cp, e1);
-	hit.v = v_dot(cp, v_cross(hit.normal, e1));
+	u = v_dot(cp, e1);
+	v = v_dot(cp, v_cross(hit.normal, e1));
+	if (object->surface == SURF_CHECK)
+		hit.color = color_checker(u, v, object->color, object->color_alt);
+	else
+		hit.normal = color_bump(u, v, hit.normal, object->bump_map);
 	return (hit);
 }
 

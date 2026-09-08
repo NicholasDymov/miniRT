@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 12:23:32 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/08 18:07:02 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/08 19:23:19 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static inline t_hit	hit_build(t_ray ray, float t, float direction,
 		const t_object *sphere)
 {
 	t_hit	hit;
+	float	u;
+	float	v;
 
 	hit.hit = true;
 	hit.distance = t;
@@ -26,6 +28,15 @@ static inline t_hit	hit_build(t_ray ray, float t, float direction,
 				sphere->center));
 	hit.camera = v_scale(-1.0f, ray.dir);
 	hit.color = sphere->color;
+	if (sphere->surface == SURF_SOLID)
+		return (hit);
+	u = 0.5f + atan2f(hit.normal.z, hit.normal.x) * (0.5f / M_PI);
+	v = acosf(fmaxf(-1.0f, fminf(1.0f, hit.normal.y))) * (1.0f / M_PI);
+	if (sphere->surface == SURF_CHECK)
+		hit.color = color_checker(u * 20, v * 10, sphere->color,
+				sphere->color_alt);
+	else
+		hit.normal = color_bump(u, v, hit.normal, sphere->bump_map);
 	return (hit);
 }
 
