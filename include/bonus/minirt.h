@@ -6,7 +6,7 @@
 /*   By: ddymov <ddymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:35:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/08 15:46:32 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/08 18:01:06 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_camera
 typedef struct s_ray
 {
 	t_point3d		origin;
-	t_vector3d		direction;
+	t_vector3d		dir;
 }					t_ray;
 
 typedef struct s_hit
@@ -162,12 +162,21 @@ t_ray				ray_generate(uint32_t x, uint32_t y,
 						const t_minirt *minirt);
 t_hit				ray_trace(t_ray ray, const t_minirt *minirt);
 
-t_hit				intersect_sphere(t_ray ray, const t_object *sphere);
 t_hit				intersect_plane(t_ray ray, const t_object *plane);
+t_hit				intersect_sphere(t_ray ray, const t_object *sphere);
 t_hit				intersect_cylinder(t_ray ray, const t_object *cylinder);
 t_hit				intersect_cone(t_ray ray, const t_object *cone);
 
-uint32_t			color_get(t_hit hit, const t_minirt *minirt);
+bool				intersect_plane_fast(t_ray ray, const t_object *plane,
+						float max_dist);
+bool				intersect_sphere_fast(t_ray ray, const t_object *sphere,
+						float max_dist);
+bool				intersect_cylinder_fast(t_ray ray, const t_object *cylinder,
+						float max_dist);
+bool				intersect_cone_fast(t_ray ray, const t_object *cone,
+						float max_dist);
+
+uint32_t			color_get(t_hit *hit, const t_minirt *minirt);
 uint32_t			rgba_pack(uint32_t r, uint32_t g, uint32_t b, uint32_t a);
 
 t_error				parse_ambient(const t_vector *tokens, t_minirt *minirt,

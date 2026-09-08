@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/06 13:11:34 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/08 11:01:03 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/08 18:02:20 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ static inline t_hit	hit_build_surface(t_ray ray, float t, const t_object *cone)
 
 	hit.hit = true;
 	hit.distance = t;
-	hit.point = v_add(ray.origin, v_scale(t, ray.direction));
+	hit.point = v_add(ray.origin, v_scale(t, ray.dir));
 	cp = v_sub(hit.point, cone->center);
 	z = v_dot(cp, cone->normal);
 	hit.normal = v_normalize(v_sub(cp, v_scale(z * cone->r_2, cone->normal)));
-	if (v_dot(hit.normal, ray.direction) > 0.0f)
+	if (v_dot(hit.normal, ray.dir) > 0.0f)
 		hit.normal = v_scale(-1.0f, hit.normal);
-	hit.camera = v_scale(-1.0f, ray.direction);
+	hit.camera = v_scale(-1.0f, ray.dir);
 	hit.color = cone->color;
 	return (hit);
 }
@@ -43,8 +43,7 @@ static inline float	intersect_surface(t_ray ray, const t_object *cone,
 	float	a_inv;
 
 	prms->a = 1 - cone->r_2 * prms->d_n * prms->d_n;
-	prms->b = v_dot(ray.direction, prms->co) - cone->r_2 * prms->d_n
-		* prms->co_n;
+	prms->b = v_dot(ray.dir, prms->co) - cone->r_2 * prms->d_n * prms->co_n;
 	prms->c = v_square(prms->co) - cone->r_2 * prms->co_n * prms->co_n;
 	if (prms->a == 0.0f)
 		return (FLT_MAX);
@@ -70,14 +69,14 @@ static inline t_hit	hit_build_disk(t_ray ray, float t, const t_object *cone,
 	t_hit	hit;
 
 	hit.hit = true;
-	hit.point = v_add(ray.origin, v_scale(t, ray.direction));
+	hit.point = v_add(ray.origin, v_scale(t, ray.dir));
 	hit.distance = t;
 	if (d_n > 0.0f)
 		hit.normal = v_scale(-1.0f, cone->normal);
 	else
 		hit.normal = cone->normal;
 	hit.color = cone->color;
-	hit.camera = v_scale(-1.0f, ray.direction);
+	hit.camera = v_scale(-1.0f, ray.dir);
 	return (hit);
 }
 
@@ -99,7 +98,7 @@ t_hit	intersect_cone(t_ray ray, const t_object *cone)
 	float		t_disk;
 	t_params	params;
 
-	params.d_n = v_dot(ray.direction, cone->normal);
+	params.d_n = v_dot(ray.dir, cone->normal);
 	params.co = v_sub(ray.origin, cone->center);
 	params.co_n = v_dot(params.co, cone->normal);
 	t_surface = intersect_surface(ray, cone, &params);

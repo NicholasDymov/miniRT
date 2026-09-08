@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/01 16:04:08 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/06 10:23:02 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/08 17:49:26 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	minirt_render(t_minirt *minirt)
 			ray = ray_generate(x, y, minirt);
 			hit = ray_trace(ray, minirt);
 			if (hit.hit)
-				pixels[y * RT_WIDTH + x] = color_get(hit, minirt);
+				pixels[y * RT_WIDTH + x] = color_get(&hit, minirt);
 			else
 				pixels[y * RT_WIDTH + x] = rgba_pack(0, 0, 0, 255);
 			x++;

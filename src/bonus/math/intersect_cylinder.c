@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 12:23:32 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/08 11:18:32 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/08 18:08:19 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ static inline t_hit	hit_build_surface(t_ray ray, float t,
 
 	hit.hit = true;
 	hit.distance = t;
-	hit.point = v_add(ray.origin, v_scale(t, ray.direction));
+	hit.point = v_add(ray.origin, v_scale(t, ray.dir));
 	hit.normal = v_scale(1.0f / cylinder->radius, v_project(v_sub(hit.point,
 					cylinder->center), cylinder->normal));
-	if (v_dot(hit.normal, ray.direction) > 0.0f)
+	if (v_dot(hit.normal, ray.dir) > 0.0f)
 		hit.normal = v_scale(-1.0f, hit.normal);
-	hit.camera = v_scale(-1.0f, ray.direction);
+	hit.camera = v_scale(-1.0f, ray.dir);
 	hit.color = cylinder->color;
 	return (hit);
 }
@@ -41,7 +41,7 @@ static inline float	intersect_surface(t_ray ray, const t_object *cylinder,
 	float	a_inv;
 
 	prms->a = 1 - prms->d_n * prms->d_n;
-	prms->b = v_dot(ray.direction, prms->co) - prms->d_n * prms->co_n;
+	prms->b = v_dot(ray.dir, prms->co) - prms->d_n * prms->co_n;
 	prms->c = v_square(prms->co) - prms->co_n * prms->co_n;
 	if (prms->a < RT_EPSILON)
 		return (FLT_MAX);
@@ -66,12 +66,12 @@ static inline t_hit	hit_build_disk(t_ray ray, float t, const t_object *cylinder,
 
 	hit.hit = true;
 	hit.distance = t;
-	hit.point = v_add(ray.origin, v_scale(t, ray.direction));
+	hit.point = v_add(ray.origin, v_scale(t, ray.dir));
 	if (d_n > 0.0f)
 		hit.normal = v_scale(-1.0f, cylinder->normal);
 	else
 		hit.normal = cylinder->normal;
-	hit.camera = v_scale(-1.0f, ray.direction);
+	hit.camera = v_scale(-1.0f, ray.dir);
 	hit.color = cylinder->color;
 	return (hit);
 }
@@ -108,7 +108,7 @@ t_hit	intersect_cylinder(t_ray ray, const t_object *cylinder)
 	float		t_disk;
 	t_params	params;
 
-	params.d_n = v_dot(ray.direction, cylinder->normal);
+	params.d_n = v_dot(ray.dir, cylinder->normal);
 	params.co = v_sub(ray.origin, cylinder->center);
 	params.co_n = v_dot(params.co, cylinder->normal);
 	t_surface = intersect_surface(ray, cylinder, &params);
