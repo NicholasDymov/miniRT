@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/05 15:28:44 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/09 09:02:48 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/09 14:04:34 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ static inline void	hook_rotate(keys_t key, t_minirt *minirt)
 	}
 	if (key == MLX_KEY_W || key == MLX_KEY_S)
 		axis = minirt->viewport.right;
-	if (key == MLX_KEY_W || key == MLX_KEY_D)
+	if (key == MLX_KEY_S || key == MLX_KEY_D)
 		*dir = v_rotation(*dir, axis, RT_ROT_STEP);
-	else if (key == MLX_KEY_S || key == MLX_KEY_A)
+	else if (key == MLX_KEY_W || key == MLX_KEY_A)
 		*dir = v_rotation(*dir, axis, -RT_ROT_STEP);
 	else
 		return ;
