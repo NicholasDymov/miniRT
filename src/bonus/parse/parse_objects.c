@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 15:19:17 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/08 15:53:21 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/09 08:53:23 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,18 @@ static inline void	post_process(t_object *obj)
 	float	k;
 
 	obj->radius *= 0.5f;
+	obj->radius_inv = 1.0f / obj->radius;
 	if (obj->type == OBJ_CYLINDER)
 	{
 		obj->height *= 0.5f;
 		obj->r_2 = obj->radius * obj->radius;
+		obj->height_inv = 1.0f / obj->height;
 	}
 	else
 	{
 		k = obj->radius / obj->height;
 		obj->r_2 = 1 + k * k;
+		obj->height_inv = 1.0f / obj->height;
 	}
 }
 
@@ -61,6 +64,7 @@ t_error	parse_sphere(const t_vector *tokens, t_minirt *minirt)
 	if (ft_safe_atof(data[2], &sphere.radius))
 		return (err_msg(ERR_PARSE, data[2]));
 	sphere.radius *= 0.5f;
+	sphere.radius_inv = 1.0f / sphere.radius;
 	if (parse_color(data[3], &sphere.color, true))
 		return (ERR_PARSE);
 	if (tokens->size == 5 && parse_texture(data[4], &sphere))

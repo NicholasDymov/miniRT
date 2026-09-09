@@ -6,11 +6,12 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/06 10:59:48 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/08 19:46:18 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/09 09:49:28 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MLX42/MLX42.h"
+#include "ft_math.h"
 #include "minirt.h"
 #include <math.h>
 #include <stdint.h>
@@ -48,10 +49,7 @@ t_vector3d	color_bump(float u, float v, t_vector3d normal,
 	n.x = bump_map->pixels[i] * (2.0f / 255.0f) - 1.0f;
 	n.y = bump_map->pixels[i + 1] * (2.0f / 255.0f) - 1.0f;
 	n.z = bump_map->pixels[i + 2] * (2.0f / 255.0f) - 1.0f;
-	if (fabsf(normal.y) + RT_EPSILON > 1.0f)
-		t = v_normalize(v_cross(normal, (t_vector3d){1.0f, 0.0f, 0.0f}));
-	else
-		t = v_normalize(v_cross(normal, (t_vector3d){0.0f, 1.0f, 0.0f}));
+	t = v_orthonormal(normal);
 	return (v_normalize(v_add(v_add(v_scale(n.x, t), v_scale(n.y,
 						v_cross(normal, t))), v_scale(n.z, normal))));
 }

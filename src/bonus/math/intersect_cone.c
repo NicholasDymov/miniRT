@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/06 13:11:34 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/08 18:02:20 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/09 09:15:09 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,28 @@ static inline t_hit	hit_build_surface(t_ray ray, float t, const t_object *cone)
 {
 	t_hit		hit;
 	t_vector3d	cp;
-	float		z;
+	t_vector3d	e1;
+	float		u;
+	float		v;
 
-	hit.hit = true;
-	hit.distance = t;
+	hit = (t_hit){.hit = true, .distance = t, .color = cone->color};
 	hit.point = v_add(ray.origin, v_scale(t, ray.dir));
 	cp = v_sub(hit.point, cone->center);
-	z = v_dot(cp, cone->normal);
-	hit.normal = v_normalize(v_sub(cp, v_scale(z * cone->r_2, cone->normal)));
+	hit.normal = v_normalize(v_sub(cp, v_scale(v_dot(cp, cone->normal)
+					* cone->r_2, cone->normal)));
 	if (v_dot(hit.normal, ray.dir) > 0.0f)
 		hit.normal = v_scale(-1.0f, hit.normal);
 	hit.camera = v_scale(-1.0f, ray.dir);
-	hit.color = cone->color;
+	if (cone->surface == SURF_SOLID)
+		return (hit);
+	e1 = v_orthonormal(cone->normal);
+	u = 0.5f + atan2f(v_dot(cp, v_cross(cone->normal, e1)), v_dot(cp, e1))
+		* (0.5f / M_PI);
+	v = v_dot(cp, cone->normal) * cone->height_inv;
+	if (cone->surface == SURF_CHECK)
+		hit.color = color_checker(u * 20, v * 10, cone->color, cone->color_alt);
+	else
+		hit.normal = color_bump(u, v, hit.normal, cone->bump_map);
 	return (hit);
 }
 
@@ -66,17 +76,30 @@ static inline float	intersect_surface(t_ray ray, const t_object *cone,
 static inline t_hit	hit_build_disk(t_ray ray, float t, const t_object *cone,
 		float d_n)
 {
-	t_hit	hit;
+	t_hit		hit;
+	t_vector3d	e1;
+	t_vector3d	cp;
+	float		u;
+	float		v;
 
-	hit.hit = true;
+	hit = (t_hit){.hit = true, .distance = t, .color = cone->color};
 	hit.point = v_add(ray.origin, v_scale(t, ray.dir));
-	hit.distance = t;
 	if (d_n > 0.0f)
 		hit.normal = v_scale(-1.0f, cone->normal);
 	else
 		hit.normal = cone->normal;
-	hit.color = cone->color;
 	hit.camera = v_scale(-1.0f, ray.dir);
+	if (cone->surface == SURF_SOLID)
+		return (hit);
+	e1 = v_orthonormal(cone->normal);
+	cp = v_sub(hit.point, v_add(cone->center, v_scale(cone->height,
+					cone->normal)));
+	u = 0.5f + v_dot(cp, e1) * 0.5f * cone->radius_inv;
+	v = 0.5f + v_dot(cp, v_cross(cone->normal, e1)) * 0.5f * cone->radius_inv;
+	if (cone->surface == SURF_CHECK)
+		hit.color = color_checker(u * 10, v * 10, cone->color, cone->color_alt);
+	else
+		hit.normal = color_bump(u, v, hit.normal, cone->bump_map);
 	return (hit);
 }
 

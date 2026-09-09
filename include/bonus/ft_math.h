@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 15:58:02 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/08 10:12:52 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/09 08:20:59 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_vector3d			v_normalize(t_vector3d a);
 t_vector3d			v_cross(t_vector3d a, t_vector3d b);
 t_vector3d			v_project(t_vector3d a, t_vector3d n);
 t_vector3d			v_reflect(t_vector3d i, t_vector3d n);
+t_vector3d			v_orthonormal(t_vector3d a);
 
 t_vector3d			v_rotation(t_vector3d a, t_vector3d n, float angle);
 

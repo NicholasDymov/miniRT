@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/31 17:48:53 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/08 18:10:06 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/09 09:47:27 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static inline uint32_t	color_clamp(t_color *color, uint32_t alpha)
 	return (rgba_pack(color->r, color->g, color->b, alpha));
 }
 
-static inline bool	is_shadowed(t_ray ray, float max_dist,
+static inline bool	is_shadowed(t_ray ray, float max_dist, size_t obj_skip,
 		const t_minirt *minirt)
 {
 	bool			is_hit;
@@ -47,17 +47,20 @@ static inline bool	is_shadowed(t_ray ray, float max_dist,
 	i = 0;
 	while (i < minirt->objects.size)
 	{
-		obj = (const t_object *)vector_get(&minirt->objects, i);
-		if (obj->type == OBJ_SPHERE)
-			is_hit = intersect_sphere_fast(ray, obj, max_dist);
-		else if (obj->type == OBJ_PLANE)
-			is_hit = intersect_plane_fast(ray, obj, max_dist);
-		else if (obj->type == OBJ_CYLINDER)
-			is_hit = intersect_cylinder_fast(ray, obj, max_dist);
-		else if (obj->type == OBJ_CONE)
-			is_hit = intersect_cone_fast(ray, obj, max_dist);
-		if (is_hit)
-			return (true);
+		if (i != obj_skip)
+		{
+			obj = (const t_object *)vector_get(&minirt->objects, i);
+			if (obj->type == OBJ_SPHERE)
+				is_hit = intersect_sphere_fast(ray, obj, max_dist);
+			else if (obj->type == OBJ_PLANE)
+				is_hit = intersect_plane_fast(ray, obj, max_dist);
+			else if (obj->type == OBJ_CYLINDER)
+				is_hit = intersect_cylinder_fast(ray, obj, max_dist);
+			else if (obj->type == OBJ_CONE)
+				is_hit = intersect_cone_fast(ray, obj, max_dist);
+			if (is_hit)
+				return (true);
+		}
 		i++;
 	}
 	return (false);
@@ -80,7 +83,7 @@ static inline void	phong_light(t_hit *hit, t_light light, t_color *color,
 	light_distance_inv = 1.0f / light_distance;
 	light_ray.dir = v_scale(light_distance_inv, light_ray.dir);
 	cosine *= light_distance_inv;
-	if (is_shadowed(light_ray, light_distance, minirt))
+	if (is_shadowed(light_ray, light_distance, hit->object_id - 1, minirt))
 		return ;
 	color_accumulate(color, light.ratio * cosine, light.color, hit->color);
 	cosine = v_dot(hit->camera, v_sub(v_scale(2.0f * cosine, hit->normal),
@@ -98,7 +101,6 @@ uint32_t	color_get(t_hit *hit, const t_minirt *minirt)
 	t_light	light;
 
 	color = (t_color){.r = 0.0f, .g = 0.0f, .b = 0.0f};
-	hit->point = v_add(hit->point, v_scale(RT_EPSILON, hit->normal));
 	color_accumulate(&color, 1.0f, minirt->ambient.color, hit->color);
 	i = 0;
 	while (i < minirt->lights.size)

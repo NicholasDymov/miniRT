@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 12:23:32 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/08 18:08:19 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/09 09:15:32 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,32 @@
 #include <float.h>
 #include <math.h>
 
-static inline t_hit	hit_build_surface(t_ray ray, float t,
-		const t_object *cylinder)
+static inline t_hit	hit_build_surface(t_ray ray, float t, const t_object *cyl)
 {
-	t_hit	hit;
+	t_hit		hit;
+	t_vector3d	e1;
+	t_vector3d	cp;
+	float		u;
+	float		v;
 
-	hit.hit = true;
-	hit.distance = t;
+	hit = (t_hit){.hit = true, .distance = t, .color = cyl->color};
+	hit.camera = v_scale(-1.0f, ray.dir);
 	hit.point = v_add(ray.origin, v_scale(t, ray.dir));
-	hit.normal = v_scale(1.0f / cylinder->radius, v_project(v_sub(hit.point,
-					cylinder->center), cylinder->normal));
+	hit.normal = v_scale(cyl->radius_inv, v_project(v_sub(hit.point,
+					cyl->center), cyl->normal));
 	if (v_dot(hit.normal, ray.dir) > 0.0f)
 		hit.normal = v_scale(-1.0f, hit.normal);
-	hit.camera = v_scale(-1.0f, ray.dir);
-	hit.color = cylinder->color;
+	if (cyl->surface == SURF_SOLID)
+		return (hit);
+	e1 = v_orthonormal(cyl->normal);
+	cp = v_sub(hit.point, cyl->center);
+	u = 0.5f + atan2f(v_dot(cp, v_cross(cyl->normal, e1)), v_dot(cp, e1))
+		* (0.5f / M_PI);
+	v = (v_dot(cp, cyl->normal) + cyl->height) * 0.5f * cyl->height_inv;
+	if (cyl->surface == SURF_CHECK)
+		hit.color = color_checker(u * 20, v * 10, cyl->color, cyl->color_alt);
+	else
+		hit.normal = color_bump(u, v, hit.normal, cyl->bump_map);
 	return (hit);
 }
 
@@ -59,20 +71,32 @@ static inline float	intersect_surface(t_ray ray, const t_object *cylinder,
 	return (FLT_MAX);
 }
 
-static inline t_hit	hit_build_disk(t_ray ray, float t, const t_object *cylinder,
+static inline t_hit	hit_build_disk(t_ray ray, float t, const t_object *cyl,
 		float d_n)
 {
-	t_hit	hit;
+	t_hit		hit;
+	t_vector3d	e1;
+	t_vector3d	cp;
+	float		u;
+	float		v;
 
-	hit.hit = true;
-	hit.distance = t;
+	hit = (t_hit){.hit = true, .distance = t, .color = cyl->color};
 	hit.point = v_add(ray.origin, v_scale(t, ray.dir));
 	if (d_n > 0.0f)
-		hit.normal = v_scale(-1.0f, cylinder->normal);
+		hit.normal = v_scale(-1.0f, cyl->normal);
 	else
-		hit.normal = cylinder->normal;
+		hit.normal = cyl->normal;
 	hit.camera = v_scale(-1.0f, ray.dir);
-	hit.color = cylinder->color;
+	if (cyl->surface == SURF_SOLID)
+		return (hit);
+	e1 = v_orthonormal(cyl->normal);
+	cp = v_sub(hit.point, cyl->center);
+	u = 0.5f + v_dot(cp, e1) * 0.5f * cyl->radius_inv;
+	v = 0.5f + v_dot(cp, v_cross(cyl->normal, e1)) * 0.5f * cyl->radius_inv;
+	if (cyl->surface == SURF_CHECK)
+		hit.color = color_checker(u * 10, v * 10, cyl->color, cyl->color_alt);
+	else
+		hit.normal = color_bump(u, v, hit.normal, cyl->bump_map);
 	return (hit);
 }
 

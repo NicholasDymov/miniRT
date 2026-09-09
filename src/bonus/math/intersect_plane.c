@@ -6,13 +6,12 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 12:23:32 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/08 19:21:04 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/09 09:55:39 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_math.h"
 #include "minirt.h"
-#include <math.h>
 
 static inline t_hit	hit_build(t_ray ray, float t, t_vector3d normal,
 		const t_object *object)
@@ -29,13 +28,10 @@ static inline t_hit	hit_build(t_ray ray, float t, t_vector3d normal,
 	hit.color = object->color;
 	if (object->surface == SURF_SOLID)
 		return (hit);
-	if (fabsf(hit.normal.y) + RT_EPSILON > 1.0f)
-		e1 = v_normalize(v_cross(hit.normal, (t_vector3d){1.0f, 0.0f, 0.0f}));
-	else
-		e1 = v_normalize(v_cross(hit.normal, (t_vector3d){0.0f, 1.0f, 0.0f}));
+	e1 = v_orthonormal(hit.normal);
 	cp = v_sub(hit.point, object->center);
-	u = v_dot(cp, e1);
-	v = v_dot(cp, v_cross(hit.normal, e1));
+	u = v_dot(cp, e1) * 0.1f;
+	v = v_dot(cp, v_cross(hit.normal, e1)) * 0.1f;
 	if (object->surface == SURF_CHECK)
 		hit.color = color_checker(u, v, object->color, object->color_alt);
 	else

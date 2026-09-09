@@ -6,7 +6,7 @@
 /*   By: ndymov <ndymov@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/05 15:28:44 by ndymov            #+#    #+#             */
-/*   Updated: 2026/09/05 23:24:05 by ndymov           ###   ########.fr       */
+/*   Updated: 2026/09/09 09:02:48 by ndymov           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,19 @@ static inline void	hook_resize(keys_t key, t_minirt *minirt)
 		obj->radius += RT_RES_STEP;
 	else if (key == MLX_KEY_A)
 		obj->radius = fmaxf(RT_EPSILON * 100.0f, obj->radius - RT_RES_STEP);
-	else if (key == MLX_KEY_W && obj->type == OBJ_CYLINDER)
+	else if (key == MLX_KEY_W && obj->type != OBJ_SPHERE)
 		obj->height += RT_RES_STEP;
-	else if (key == MLX_KEY_S && obj->type == OBJ_CYLINDER)
+	else if (key == MLX_KEY_S && obj->type != OBJ_SPHERE)
 		obj->height = fmaxf(RT_EPSILON * 100.0f, obj->height - RT_RES_STEP);
 	else
 		return ;
+	obj->radius_inv = 1.0f / obj->radius;
+	if (obj->type != OBJ_SPHERE)
+		obj->height_inv = 1.0f / obj->height;
+	if (obj->type == OBJ_CYLINDER)
+		obj->r_2 = obj->radius * obj->radius;
+	else if (obj->type == OBJ_CONE)
+		obj->r_2 = 1.0f + square(obj->radius / obj->height);
 	minirt_render(minirt);
 }
 
